@@ -90,6 +90,26 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "jhipster generate sample-dev",
+      "program": "${workspaceFolder}/bin/jhipster.cjs",
+      "timeout": 100000,
+      "args": ["-d", "--skip-checks", "--skip-git", "--skip-cache"],
+      "cwd": "${workspaceFolder}/tmp/jhipster-test"
+      // "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "jhipster generate sample-dev from jdl",
+      "program": "${workspaceFolder}/bin/jhipster.cjs",
+      "timeout": 100000,
+      "args": ["jdl", "${workspaceFolder}/example/jdl/jdl-test.jdl", "-d", "--skip-checks", "--skip-git", "--skip-cache"],
+      "cwd": "${workspaceFolder}/tmp/jdl-test",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "internalConsoleOptions": "neverOpen",
       "name": "update vscode launch.json",
       "program": "${workspaceFolder}/test-integration/scripts/99-update-vscode.js",

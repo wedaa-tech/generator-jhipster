@@ -21,6 +21,7 @@ const messageBrokerTypes = {
   KAFKA: 'kafka',
   RABBITMQ: 'rabbitmq', // cmi-tic-varun
   PULSAR: 'pulsar',
+  REST_API: 'rest-api',
   NO: 'no',
 };
 export default messageBrokerTypes;
