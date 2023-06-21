@@ -61,7 +61,7 @@ const { SPRING_WEBSOCKET } = websocketTypes;
 
 const NO_WEBSOCKET = websocketTypes.NO;
 
-const { KAFKA, RABBITMQ, PULSAR, REST_API } = messageBrokerTypes;
+const { KAFKA, RABBITMQ, PULSAR } = messageBrokerTypes;
 const NO_MESSAGE_BROKER = messageBrokerTypes.NO;
 
 const ApplicationOptionTypes: Record<string, JDLApplicationOptionTypeValue> = {
@@ -83,6 +83,7 @@ const optionNames = {
   CLIENT_PACKAGE_MANAGER: 'clientPackageManager',
   CLIENT_THEME: 'clientTheme',
   CLIENT_THEME_VARIANT: 'clientThemeVariant',
+  COMMUNICATIONS_LIST: 'communicationsList',
   WITH_ADMIN_UI: 'withAdminUi',
   WITH_EXAMPLE: 'withExample', // adding new option for withExample @cmi-tic-harika
   CREATION_TIMESTAMP: 'creationTimestamp',
@@ -204,7 +205,6 @@ export const jhipsterOptionValues: Record<string, JDLApplicationOptionValue> = {
   [optionNames.MESSAGE_BROKER]: {
     [KAFKA]: KAFKA,
     [RABBITMQ]: RABBITMQ,
-    [REST_API]: REST_API,
     [PULSAR]: PULSAR,
     [NO_MESSAGE_BROKER]: NO_MESSAGE_BROKER,
   },
@@ -249,6 +249,7 @@ export const jhipsterOptionValues: Record<string, JDLApplicationOptionValue> = {
     no: NO_WEBSOCKET,
   },
   [optionNames.WITH_ADMIN_UI]: true,
+  [optionNames.COMMUNICATIONS_LIST]: undefined,
   [optionNames.WITH_EXAMPLE]: true, // setting default value for withExample @cmi-tic-harika
   [optionNames.ENABLE_GRADLE_ENTERPRISE]: false,
   [optionNames.GRADLE_ENTERPRISE_HOST]: '',
@@ -306,6 +307,7 @@ export const jhipsterOptionTypes: Record<string, JDLApplicationOptionType> = {
   [optionNames.TEST_FRAMEWORKS]: { type: ApplicationOptionTypes.LIST },
   [optionNames.WEBSOCKET]: { type: ApplicationOptionTypes.STRING },
   [optionNames.WITH_ADMIN_UI]: { type: ApplicationOptionTypes.BOOLEAN },
+  [optionNames.COMMUNICATIONS_LIST]: { type: ApplicationOptionTypes.LIST },
   [optionNames.WITH_EXAMPLE]: { type: ApplicationOptionTypes.BOOLEAN }, // declaring option type of withExample @cmi-tic-harika
   [optionNames.ENABLE_GRADLE_ENTERPRISE]: { type: ApplicationOptionTypes.BOOLEAN },
   [optionNames.GRADLE_ENTERPRISE_HOST]: { type: ApplicationOptionTypes.STRING },

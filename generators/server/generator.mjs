@@ -53,7 +53,7 @@ import {
   GENERATOR_JAVA,
   GENERATOR_KAFKA,
   GENERATOR_RABBITMQ, // cmi-tic-varun
-  GENERATOR_REST_API,
+  GENERATOR_COMMUNICATIONS,
   GENERATOR_LANGUAGES,
   GENERATOR_MAVEN,
   GENERATOR_MONGODB,
@@ -131,7 +131,7 @@ const { CAFFEINE, EHCACHE, HAZELCAST, INFINISPAN, MEMCACHED, REDIS, NO: NO_CACHE
 const { NO: NO_WEBSOCKET, SPRING_WEBSOCKET } = websocketTypes;
 const { CASSANDRA, COUCHBASE, MONGODB, NEO4J, SQL, NO: NO_DATABASE } = databaseTypes;
 const { MICROSERVICE, GATEWAY } = applicationTypes;
-const { KAFKA, PULSAR, RABBITMQ, REST_API } = messageBrokerTypes; // added rabbitmq option cmi-tic-varun
+const { KAFKA, PULSAR, RABBITMQ } = messageBrokerTypes; // added rabbitmq option cmi-tic-varun
 
 const { NO: NO_SEARCH_ENGINE, ELASTICSEARCH } = searchEngineTypes;
 const { CommonDBTypes, RelationalOnlyDBTypes } = fieldTypes;
@@ -254,8 +254,17 @@ export default class JHipsterServerGenerator extends BaseApplicationGenerator {
   get composing() {
     return this.asComposingTaskGroup({
       async composing() {
-        const { buildTool, enableTranslation, databaseType, messageBroker, searchEngine, testFrameworks, websocket, cacheProvider } =
-          this.jhipsterConfigWithDefaults;
+        const {
+          buildTool,
+          enableTranslation,
+          databaseType,
+          messageBroker,
+          communicationsList,
+          searchEngine,
+          testFrameworks,
+          websocket,
+          cacheProvider,
+        } = this.jhipsterConfigWithDefaults;
         if (buildTool === GRADLE) {
           await this.composeWithJHipster(GENERATOR_GRADLE);
         } else if (buildTool === MAVEN) {
@@ -281,15 +290,14 @@ export default class JHipsterServerGenerator extends BaseApplicationGenerator {
         } else if (databaseType === NEO4J) {
           await this.composeWithJHipster(GENERATOR_NEO4J);
         }
+        if (communicationsList) {
+          await this.composeWithJHipster(GENERATOR_COMMUNICATIONS);
+        }
         if (messageBroker === KAFKA) {
           await this.composeWithJHipster(GENERATOR_KAFKA);
         }
-        // cmi-tic-varun
         if (messageBroker === RABBITMQ) {
           await this.composeWithJHipster(GENERATOR_RABBITMQ);
-        }
-        if (messageBroker === REST_API) {
-          await this.composeWithJHipster(GENERATOR_REST_API);
         }
         if (messageBroker === PULSAR) {
           await this.composeWithJHipster(GENERATOR_PULSAR);
