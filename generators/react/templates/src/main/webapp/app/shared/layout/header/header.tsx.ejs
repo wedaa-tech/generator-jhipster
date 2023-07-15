@@ -42,9 +42,8 @@ import { setLocale } from 'app/shared/reducers/locale';
 export interface IHeaderProps {
   isAuthenticated: boolean;
   isAdmin: boolean;
-  ribbonEnv: string;
-  isInProduction: boolean;
   isOpenAPIEnabled: boolean;
+  isInProduction: boolean;
 <%_ if (enableTranslation) { _%>
   currentLocale: string;
 <%_ } _%>
@@ -70,39 +69,24 @@ const Header = (props: IHeaderProps) => {
   }
 <%_ } _%>
 
-  const renderDevRibbon = () => props.isInProduction === false ? (
-    <div className="ribbon dev">
-      <a href="">
-<%_ if (enableTranslation) { _%>
-        <Translate contentKey={`global.ribbon.${props.ribbonEnv}`} />
-<%_ } else { _%>
-        Development
-<%_ } _%>
-      </a>
-    </div>
-  ) : null;
-
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   /* jhipster-needle-add-element-to-menu - JHipster will add new menu items here */
 
   return (
     <div id="app-header">
-      <%_ if(!withExample) { _%>
-        {renderDevRibbon()}
-      <%_ } _%>
-      <LoadingBar className="loading-bar"/>
       <Navbar data-cy="navbar" <% if (clientThemeNone || !clientThemeLight) { %>dark<% } else { %>light<% } %> expand="md" fixed="top" className="<%_ if (clientThemeNone) { _%>jh-navbar<%_ } else { _%>bg-<%= clientThemeVariant %><%_ } _%>">
         <NavbarToggler aria-label="Menu" onClick={toggleMenu} />
         <Brand />
         <Collapse isOpen={menuOpen} navbar>
-          <Nav id="header-tabs" className="ms-auto" navbar>
-            <Home />
-            <%_ if(!withExample) { _%>
-            {props.isAuthenticated && <EntitiesMenu />}
-            {props.isAuthenticated && props.isAdmin &&
-            <AdminMenu showOpenAPI={props.isOpenAPIEnabled} <% if (devDatabaseTypeH2Any) { %> showDatabase={!props.isInProduction} <%_ } _%> />}
-            <%_ } _%>
+          <Nav
+            navbar
+          >
+            {props.isAuthenticated && props.isAdmin && (
+              <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} />
+            )}
+          </Nav>
+          <Nav id="header-tabs" className="ms-auto" navbar style={{ marginRight: '200px' }}>
           <%_ if (enableTranslation && !withExample) { _%>
             <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} />
           <%_ } _%>
