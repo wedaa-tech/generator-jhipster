@@ -63,7 +63,7 @@ export function writeFiles() {
         if (this.app.searchEngine === ELASTICSEARCH) {
           this.writeFile('db/elasticsearch.yml.ejs', `${appOut}/${appName}-elasticsearch.yml`);
         }
-        if (this.app.applicationType === GATEWAY || this.app.applicationType === MONOLITH) {
+        if (this.app.applicationType === GATEWAY || this.app.applicationType === MONOLITH || this.app.applicationType === MICROSERVICE) {
           if (this.istio) {
             this.writeFile('istio/gateway.yml.ejs', `${appOut}/${appName}-gateway.yml`);
           } else if (this.kubernetesServiceType === 'Ingress') {
@@ -120,13 +120,14 @@ export function writeFiles() {
       }
     },
 
-    // write's keycloak files with istio if istio is true  @cmi-tic-craxkumar
+    // write's keycloak files with istio if istio and keycloak is true  @cmi-tic-craxkumar
     writeKeycloakWithIstio() {
-      if (!this.istio) return;
-      const keycloakOut = 'keycloak'.concat('-', suffix);
-      this.writeFile('keycloak/keycloak-destination-rule.yml.ejs', `${keycloakOut}/keycloak-destination-rule.yml`);
-      this.writeFile('keycloak/keycloak-virtual-service.yml.ejs', `${keycloakOut}/keycloak-virtual-service.yml`);
-      this.writeFile('keycloak/keycloak-gateway.yml.ejs', `${keycloakOut}/keycloak-gateway.yml`);
+      if (this.istio && this.useKeycloak) {
+        const keycloakOut = 'keycloak'.concat('-', suffix);
+        this.writeFile('keycloak/keycloak-destination-rule.yml.ejs', `${keycloakOut}/keycloak-destination-rule.yml`);
+        this.writeFile('keycloak/keycloak-virtual-service.yml.ejs', `${keycloakOut}/keycloak-virtual-service.yml`);
+        this.writeFile('keycloak/keycloak-gateway.yml.ejs', `${keycloakOut}/keycloak-gateway.yml`);
+      }
     },
 
     // write's keycloak files if useKeycloak is true @cmi-tic-craxkumar

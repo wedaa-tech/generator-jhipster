@@ -1,0 +1,86 @@
+application {
+  config {
+    baseName client,
+    applicationType gateway,
+    packageName com.cmi.tic,
+    authenticationType oauth2,
+    databaseType no,
+    prodDatabaseType no,
+    serviceDiscoveryType no,
+    clientFramework react,
+    serverPort 3000
+    blueprints [react]
+  }
+}
+
+application {
+  config {
+    baseName gateway
+    applicationType gateway,
+    packageName com.cmi.tic,
+    authenticationType oauth2,
+    databaseType no,
+    prodDatabaseType no,
+    serviceDiscoveryType eureka,
+    clientFramework no,
+    serverPort 8000
+  }
+}
+
+application {
+  config {
+    baseName backend
+    applicationType microservice,
+    packageName com.cmi.tic,
+    authenticationType oauth2,
+    databaseType no,
+    prodDatabaseType no,
+    serviceDiscoveryType eureka,
+    clientFramework no,
+    serverPort 8089
+  }
+}
+
+
+
+communication {
+  client "client"
+  server "gateway"
+  framework "rest-api"
+  type "sync"
+}
+
+communication {
+  client "client"
+  server "backend"
+  framework "rest-api"
+  type "sync"
+}
+
+communication {
+  client "gateway"
+  server "backend"
+  framework "rest-api"
+  type "sync"
+}
+
+communication {
+  client "backend"
+  server "gateway"
+  framework "rest-api"
+  type "sync"
+}
+
+deployment {
+  deploymentType kubernetes
+  appsFolders [client, gateway, backend]
+  dockerRepositoryName "raxkumar"
+  serviceDiscoveryType eureka
+  kubernetesNamespace k8s
+  kubernetesServiceType Ingress
+  ingressDomain "shopt.gq"
+  istio true
+  kubernetesUseDynamicStorage true
+  kubernetesStorageClassName "demosc"
+  kubernetesStorageProvisioner "ebs.csi.aws.com"
+}

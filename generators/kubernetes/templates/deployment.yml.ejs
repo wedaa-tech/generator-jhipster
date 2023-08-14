@@ -52,6 +52,7 @@ spec:
                         - <%= app.baseName.toLowerCase() %>
                 topologyKey: kubernetes.io/hostname
               weight: 100
+<%_ if (app.clientFramework === 'no') { _%>
       initContainers:
         - name: init-ds
           image: busybox:latest
@@ -86,12 +87,16 @@ spec:
                   echo "DB is not yet reachable;sleep for 10s before retry"
                   sleep 10
                 done
+<%_ } _%>        
       containers:
       - name: <%= app.baseName.toLowerCase() %>-app
         image: <%= app.targetImageName %>
+<%_ if (app.clientFramework === 'no') { _%>
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: prod
+          value: prod,api-docs
+        - name: JHIPSTER_CORS_ALLOWED_ORIGINS
+          value: '<%= appConfigs.map(config => "http://" + config.baseName + "." + kubernetesNamespace + "." + ingressDomain).join(",") %>'
       <%_ if (minikube) { _%>
         - name: MINIKUBE_IP
           valueFrom:
@@ -352,6 +357,7 @@ spec:
       <%_ } _%> 
         - name: GO_MICRO_SERVICE_REGISTRY_URL
           value: http://admin:$(JHIPSTER_REGISTRY_PASSWORD)@jhipster-registry.<%= kubernetesNamespace %>.svc.cluster.local:8761/eureka/apps/
+<%_ } _%>
         resources:
           requests:
             memory: "1Gi"
@@ -359,6 +365,11 @@ spec:
           limits:
             memory: "2Gi"
             cpu: "1"
+<%_ if (app.clientFramework === 'react' || app.clientFramework === 'angular' || app.clientFramework === 'vue') { _%>    
+        ports:
+        - name: http
+          containerPort: 80
+<%_ } else {_%>
         ports:
         - name: <%= (externalLB && app.applicationTypeGateway) ? app.baseName.toLowerCase() + '-port' : 'http' %>
           containerPort: <%= app.serverPort %>
@@ -374,3 +385,6 @@ spec:
             path: /management/health/liveness
             port: <%= (externalLB && app.applicationTypeGateway) ? app.baseName.toLowerCase() + '-port' : 'http' %>
           initialDelaySeconds: 120
+  <%_ } _%>
+
+

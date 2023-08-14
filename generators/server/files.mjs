@@ -413,7 +413,7 @@ export const baseServerFiles = {
   serverJavaAuthConfig: [
     {
       condition: generator =>
-        !generator.reactive && (generator.databaseTypeSql || generator.databaseTypeMongodb || generator.databaseTypeCouchbase),
+        !generator.reactive && (generator.databaseTypeSql || generator.databaseTypeMongodb || generator.databaseTypeCouchbase) && ( generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['security/SpringSecurityAuditorAware.java'],

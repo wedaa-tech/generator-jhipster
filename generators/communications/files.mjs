@@ -26,12 +26,14 @@ export default async function writeCommunicationsFilesTask({ application }) {
   // if (this.communicationsAsyncTypePulsar) {
   // }
 
-  if (this.communicationsFrameworkRestAPI) {
+  if (this.communicationsFrameworkRestAPI ) {
+    if( this.jhipsterConfig.authenticationType === 'oauth2' )
     this.fs.copyTpl(
       this.templatePath(`${REST_API_MAIN_DIR}/java/package/config/webClient/AccessToken.java.ejs`),
       this.destinationPath(`${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/webClient/AccessToken.java')),
       {
         packageName: this.jhipsterConfig.packageName,
+        authenticationTypeOauth2: this.jhipsterConfig.authenticationType == 'oauth2'
       }
     );
 
@@ -42,6 +44,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
       ),
       {
         packageName: this.jhipsterConfig.packageName,
+        authenticationTypeOauth2: this.jhipsterConfig.authenticationType == 'oauth2'
       }
     );
   }
@@ -95,6 +98,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
             packageName: this.jhipsterConfig.packageName,
             capitalizeServerName,
             serverName: communications[i].server.toLowerCase(),
+            authenticationTypeOauth2: this.jhipsterConfig.authenticationType == 'oauth2'
           }
         );
         this.fs.copyTpl(
@@ -108,6 +112,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
             packageName: this.jhipsterConfig.packageName,
             capitalizeServerName,
             serverName: communications[i].server.toLowerCase(),
+            authenticationTypeOauth2: this.jhipsterConfig.authenticationType == 'oauth2'
           }
         );
       }
@@ -158,6 +163,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
           {
             packageName: this.jhipsterConfig.packageName,
             serverName: communications[i].server.toLowerCase(),
+            authenticationTypeOauth2: this.jhipsterConfig.authenticationType == 'oauth2'
           }
         );
         this.fs.copyTpl(
@@ -168,6 +174,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
           {
             packageName: this.jhipsterConfig.packageName,
             serverName: communications[i].server.toLowerCase(),
+            authenticationTypeOauth2: this.jhipsterConfig.authenticationType == 'oauth2'
           }
         );
       }

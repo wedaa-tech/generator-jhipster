@@ -751,7 +751,7 @@ export default class JHipsterServerGenerator extends BaseApplicationGenerator {
             'backend:start': `./mvnw${excludeWebapp}`,
             'java:jar': './mvnw -ntp verify -DskipTests --batch-mode',
             'java:war': './mvnw -ntp verify -DskipTests --batch-mode -Pwar',
-            'java:docker': './mvnw -ntp verify -DskipTests -Pprod jib:dockerBuild',
+            'java:docker': './mvnw -ntp verify -DskipTests -Pprod,api-docs jib:dockerBuild',
             'java:docker:dev:arm64': 'npm run java:docker -- -Pdev,webapp -Djib-maven-plugin.architecture=arm64',
             'java:docker:arm64': 'npm run java:docker -- -Djib-maven-plugin.architecture=arm64',
             'backend:unit:test': `./mvnw -ntp${excludeWebapp} verify --batch-mode ${javaCommonLog} ${javaTestLog}`,
