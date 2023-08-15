@@ -27,7 +27,7 @@ export const mongoDbFiles = {
       templates: ['config/DatabaseConfiguration.java'],
     },
     {
-      condition: generator => generator.generateBuiltInUserEntity,
+      condition: generator => (generator.generateBuiltInUserEntity && (generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession)),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['config/dbmigrations/InitialSetupMigration.java'],
