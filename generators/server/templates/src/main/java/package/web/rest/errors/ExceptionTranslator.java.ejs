@@ -149,6 +149,7 @@ _%>
     }
 
     private ProblemDetailWithCause getProblemDetailWithCause(Throwable ex) {
+<%_ if ( authenticationTypeJwt || authenticationTypeOauth2 || authenticationTypeSession ) { _%>
 <%_ if (!skipUserManagement) { _%>
         if(ex instanceof <%= packageName %>.service.EmailAlreadyUsedException)
             return new EmailAlreadyUsedException().getProblemDetailWithCause();
@@ -156,6 +157,7 @@ _%>
             return new LoginAlreadyUsedException().getProblemDetailWithCause();
         if(ex instanceof <%= packageName %>.service.InvalidPasswordException )
             return (ProblemDetailWithCause) new InvalidPasswordException().getBody();
+<%_ } _%>
 <%_ } _%>
         if(ex instanceof ErrorResponseException exp && exp.getBody() instanceof ProblemDetailWithCause)
             return (ProblemDetailWithCause) exp.getBody();

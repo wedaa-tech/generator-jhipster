@@ -191,22 +191,25 @@ export const dtoFiles = {
 const userFiles = {
   userFiles: [
     {
+      condition: (generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: (data, file) => moveToJavaPackageSrcDir(data, file).replace('/User.java', `/${data.user.persistClass}.java`),
       templates: ['domain/User.java'],
     },
     {
+      condition: (generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: (data, file) => moveToJavaPackageSrcDir(data, file).replace('/UserDTO.java', `/${data.user.dtoClass}.java`),
       templates: ['service/dto/UserDTO.java'],
     },
     {
+      condition: (generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: (data, file) => moveToJavaPackageSrcDir(data, file).replace('/AdminUserDTO.java', `/${data.user.adminUserDto}.java`),
       templates: ['service/dto/AdminUserDTO.java'],
     },
     {
-      condition: data => data.generateBuiltInUserEntity,
+      condition: ((data => data.generateBuiltInUserEntity) && (generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession)),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: [
@@ -217,7 +220,7 @@ const userFiles = {
       ],
     },
     {
-      condition: data => data.generateBuiltInUserEntity,
+      condition: ((data => data.generateBuiltInUserEntity) && (generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession)),
       path: `${SERVER_TEST_SRC_DIR}package/`,
       renameTo: moveToJavaPackageTestDir,
       templates: [

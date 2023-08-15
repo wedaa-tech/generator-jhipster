@@ -59,7 +59,9 @@ import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 import org.springframework.data.relational.core.dialect.RenderContextFactory;
 import org.springframework.data.relational.core.sql.render.SqlRenderer;
 <%_ } else { _%>
+<%_ if ( authenticationTypeJwt || authenticationTypeOauth2 || authenticationTypeSession ) { _%>
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+<%_ } _%>
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 <%_ } _%>
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -88,7 +90,9 @@ import java.util.UUID;
 @EnableR2dbcRepositories({<%- domains.map(domain => `"${domain}.repository"`).join(', ') %>})
 <%_ } else { _%>
 @EnableJpaRepositories({<%- domains.map(domain => `"${domain}.repository"`).join(', ') %>})
+<%_ if ( authenticationTypeJwt || authenticationTypeOauth2 || authenticationTypeSession ) { _%>
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
+<%_ } _%>
 <%_ } _%>
 @EnableTransactionManagement
 <%_ if (searchEngineElasticsearch) { _%>

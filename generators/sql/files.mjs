@@ -30,7 +30,7 @@ export const sqlFiles = {
   ],
   reactiveJavaUserManagement: [
     {
-      condition: generator => generator.reactive && generator.generateBuiltInUserEntity,
+      condition: generator => ( generator.reactive && generator.generateBuiltInUserEntity && (generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession)),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['repository/UserSqlHelper_reactive.java', 'repository/rowmapper/UserRowMapper_reactive.java'],
