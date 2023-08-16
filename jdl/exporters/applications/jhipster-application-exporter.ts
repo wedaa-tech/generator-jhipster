@@ -39,9 +39,23 @@ export function exportApplications(applications, content) {
 /**
  * Exports JDL a application to a JDL file in the current directory.
  * @param {Object} application - the formatted JHipster application to export.
+ * @param content
  */
-export function exportApplication(application) {
-  writeConfigFile(application);
+export function exportApplication(application, content) {
+  const applicationBaseName = application[GENERATOR_NAME].baseName;
+  if (doesFileExist(applicationBaseName)) {
+    throw new Error(
+      `A file named '${applicationBaseName}' already exists, so a folder of the same name can't be created for the application.`
+    );
+  }
+  createFolderIfItDoesNotExist(applicationBaseName);
+  const communicationsList = writeCommunicationFileForMultipleApplications(
+    content,
+    applicationBaseName,
+    path.join(applicationBaseName, 'comm.yo-rc.json')
+  );
+  application[GENERATOR_NAME].communicationsList = communicationsList;
+  writeConfigFile(application, path.join(applicationBaseName, '.yo-rc.json'));
 }
 
 /**

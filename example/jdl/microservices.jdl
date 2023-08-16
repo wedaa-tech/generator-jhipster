@@ -1,0 +1,42 @@
+application {
+  config {
+    baseName gateway
+    applicationType gateway,
+    packageName com.cmi.tic,
+    authenticationType no,
+    databaseType no,
+    prodDatabaseType no,
+    serviceDiscoveryType no,
+    clientFramework no,
+    serverPort 8000
+  }
+}
+
+application {
+  config {
+    baseName gomicro
+    applicationType microservice,
+    packageName com.cmi.tic,
+    authenticationType no,
+    databaseType no,
+    prodDatabaseType no,
+    serviceDiscoveryType no,
+    clientFramework no,
+    serverPort 9000
+    blueprints [gomicro]
+  }
+}
+
+application {
+  config {
+    baseName backend
+    applicationType microservice,
+    packageName com.cmi.tic,
+    authenticationType no,
+    databaseType no,
+    prodDatabaseType no,
+    serviceDiscoveryType no,
+    clientFramework no,
+    serverPort 8089
+  }
+}

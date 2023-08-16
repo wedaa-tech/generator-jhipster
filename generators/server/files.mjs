@@ -163,7 +163,7 @@ const accountFiles = {
       ],
     },
     {
-      condition: data => data.generateUserManagement,
+      condition: ((data => data.generateUserManagement) && (generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession)),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['web/rest/vm/ManagedUserVM.java'],
@@ -186,6 +186,7 @@ const accountFiles = {
 const userManagementFiles = {
   userManagementFiles: [
     {
+      condition: generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession,
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: [
@@ -204,15 +205,18 @@ const userManagementFiles = {
       ],
     },
     {
+      condition: generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession,
       path: `${SERVER_TEST_SRC_DIR}package/`,
       renameTo: moveToJavaPackageTestDir,
       templates: ['service/MailServiceIT.java', 'security/DomainUserDetailsServiceIT.java'],
     },
     {
+      condition: generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession,
       path: SERVER_MAIN_RES_DIR,
       templates: ['templates/mail/activationEmail.html', 'templates/mail/creationEmail.html', 'templates/mail/passwordResetEmail.html'],
     },
     {
+      condition: generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession,
       path: SERVER_TEST_RES_DIR,
       templates: [
         'templates/mail/activationEmail.html',
@@ -222,7 +226,7 @@ const userManagementFiles = {
       ],
     },
     {
-      condition: generator => !generator.enableTranslation,
+      condition: generator => !generator.enableTranslation && (generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession),
       path: SERVER_TEST_RES_DIR,
       templates: ['i18n/messages_en.properties'],
     },
@@ -413,7 +417,7 @@ export const baseServerFiles = {
   serverJavaAuthConfig: [
     {
       condition: generator =>
-        !generator.reactive && (generator.databaseTypeSql || generator.databaseTypeMongodb || generator.databaseTypeCouchbase),
+        !generator.reactive && (generator.databaseTypeSql || generator.databaseTypeMongodb || generator.databaseTypeCouchbase) && ( generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['security/SpringSecurityAuditorAware.java'],

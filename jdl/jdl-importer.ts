@@ -117,7 +117,7 @@ function makeJDLImporter(content, configuration) {
       if (jdlObject.getApplicationQuantity() === 0 && jdlObject.getEntityQuantity() > 0) {
         importState.exportedEntities = importOnlyEntities(jdlObject, configuration);
       } else if (jdlObject.getApplicationQuantity() === 1) {
-        importState = importOneApplicationAndEntities(jdlObject, configuration);
+        importState = importOneApplicationAndEntities(jdlObject, configuration, content);
       } else {
         // Passing content to this method to write communication config file (comm.yo-rc.json) in each dir @cmi-tic-craxkumar
         importState = importApplicationsAndEntities(jdlObject, configuration, content);
@@ -218,7 +218,7 @@ function importOnlyEntities(jdlObject, configuration) {
   return exportJSONEntities(jsonEntities, configuration);
 }
 
-function importOneApplicationAndEntities(jdlObject, configuration) {
+function importOneApplicationAndEntities(jdlObject, configuration, content) {
   const { skipFileGeneration, forceNoFiltering } = configuration;
 
   const importState: ImportState = {
@@ -228,8 +228,9 @@ function importOneApplicationAndEntities(jdlObject, configuration) {
     exportedDeployments: [],
   };
   const formattedApplication = formatApplicationToExport(jdlObject.getApplications()[0], configuration);
-  if (!skipFileGeneration) {
-    exportApplication(formattedApplication);
+  // Changed the condition to enable the genration of .yo-rc.json & comm.yo-rc.json files @cmi-tic-craxkumar
+  if (skipFileGeneration) {
+    exportApplication(formattedApplication, content);
   }
   importState.exportedApplications.push(formattedApplication);
   const jdlApplication = jdlObject.getApplications()[0];

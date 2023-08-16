@@ -19,6 +19,7 @@
 
 import type BaseGenerator from '../../base/index.mjs';
 import { type SpringBootApplication } from '../types.mjs';
+import fs from 'fs';
 
 type UpdateServerLanguagesTaskParam = { application: SpringBootApplication & { enableTranslation: true }; control: any };
 
@@ -35,10 +36,12 @@ export function updateLanguagesInMailServiceITTask(this: BaseGenerator, { applic
     newContent += `        "${language.languageTag}"${i !== languagesDefinition.length - 1 ? ',' : ''}\n`;
   });
   newContent += '        // jhipster-needle-i18n-language-constant - JHipster will add/remove languages in this array\n    };';
-
-  this.editFile(`${javaPackageTestDir}/service/MailServiceIT.java`, { ignoreNonExisting }, content =>
+  const filePath = `${javaPackageTestDir}/service/MailServiceIT.java`;
+  if (fs.existsSync(filePath)) {
+    this.editFile(`${javaPackageTestDir}/service/MailServiceIT.java`, { ignoreNonExisting }, content =>
     content.replace(/private.*static.*String.*languages.*\{([^}]*jhipster-needle-i18n-language-constant[^}]*)\};/g, newContent)
-  );
+    );
+  }
 }
 
 export default function updateLanguagesTask(this: BaseGenerator, taskParam: UpdateServerLanguagesTaskParam) {

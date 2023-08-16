@@ -93,7 +93,12 @@
       "name": "jhipster generate sample-dev",
       "program": "${workspaceFolder}/bin/jhipster.cjs",
       "timeout": 100000,
-      "args": ["-d", "--skip-checks", "--skip-git", "--skip-cache"],
+      "args": [
+        "-d",
+        "--skip-checks",
+        "--skip-git",
+        "--skip-cache"
+      ],
       "cwd": "${workspaceFolder}/tmp/test",
       "console": "integratedTerminal"
     },
@@ -103,7 +108,10 @@
       "name": "jhipster generate sample-ci-cd",
       "program": "${workspaceFolder}/bin/jhipster.cjs",
       "timeout": 100000,
-      "args": ["ci-cd", "-d"],
+      "args": [
+        "ci-cd",
+        "-d"
+      ],
       "cwd": "${workspaceFolder}/tmp/test",
       "console": "integratedTerminal"
     },
@@ -113,7 +121,17 @@
       "name": "jhipster generate sample-dev from jdl",
       "program": "${workspaceFolder}/bin/jhipster.cjs",
       "timeout": 100000,
-      "args": ["jdl", "${workspaceFolder}/example/jdl/nooauth.jdl", "-d", "--skip-checks", "--skip-git", "--skip-cache", "--skip-jhipster-dependencies", "--skip-install"],
+      "args": [
+        "jdl",
+        "${workspaceFolder}/example/jdl/client.jdl",
+        "-d",
+        "--skip-checks",
+        "--skip-git",
+        "--skip-cache",
+        "--skip-jhipster-dependencies",
+        "--skip-install",
+        // "--skip-server"
+      ],
       "cwd": "${workspaceFolder}/tmp/test",
       "console": "integratedTerminal"
     },
@@ -137,7 +155,9 @@
       "internalConsoleOptions": "neverOpen",
       "name": "generate sample from angular workflow",
       "program": "${workspaceFolder}/test-integration/scripts/12-generate-sample.js",
-      "args": ["${input:angularSample}"],
+      "args": [
+        "${input:angularSample}"
+      ],
       "console": "integratedTerminal"
     },
     {
@@ -146,7 +166,9 @@
       "internalConsoleOptions": "neverOpen",
       "name": "generate sample from react workflow",
       "program": "${workspaceFolder}/test-integration/scripts/12-generate-sample.js",
-      "args": ["${input:reactSample}"],
+      "args": [
+        "${input:reactSample}"
+      ],
       "console": "integratedTerminal"
     },
     {
@@ -155,7 +177,9 @@
       "internalConsoleOptions": "neverOpen",
       "name": "generate sample from vue workflow",
       "program": "${workspaceFolder}/test-integration/scripts/12-generate-sample.js",
-      "args": ["${input:vueSample}"],
+      "args": [
+        "${input:vueSample}"
+      ],
       "console": "integratedTerminal"
     },
     {
@@ -164,7 +188,9 @@
       "internalConsoleOptions": "neverOpen",
       "name": "generate sample from daily-ms-oauth2 workflow",
       "program": "${workspaceFolder}/test-integration/scripts/12-generate-sample.js",
-      "args": ["${input:daily-ms-oauth2Sample}"],
+      "args": [
+        "${input:daily-ms-oauth2Sample}"
+      ],
       "console": "integratedTerminal"
     },
     {
@@ -173,7 +199,9 @@
       "internalConsoleOptions": "neverOpen",
       "name": "generate sample from daily-neo4j workflow",
       "program": "${workspaceFolder}/test-integration/scripts/12-generate-sample.js",
-      "args": ["${input:daily-neo4jSample}"],
+      "args": [
+        "${input:daily-neo4jSample}"
+      ],
       "console": "integratedTerminal"
     }
   ]

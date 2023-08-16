@@ -274,7 +274,7 @@ public class SecurityConfiguration {
 <%_ if (!applicationTypeMicroservice) { _%>
                     .pathMatchers("/services/**").authenticated()
 <%_ } _%>
-                    .pathMatchers("/v3/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                    .pathMatchers("/v3/api-docs/**").permitAll()
                     .pathMatchers("/management/health").permitAll()
                     .pathMatchers("/management/health/**").permitAll()
                     .pathMatchers("/management/info").permitAll()

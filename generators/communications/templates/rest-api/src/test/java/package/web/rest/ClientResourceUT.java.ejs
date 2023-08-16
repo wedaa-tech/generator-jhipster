@@ -1,6 +1,8 @@
 package <%= packageName %>.web.rest.comm;
 
+<%_ if(authenticationTypeOauth2) { _%>
 import <%= packageName %>.config.webClient.AccessToken;
+<%_ } _%>
 import <%= packageName %>.config.webClient.WebClientConfig;
 
 import org.junit.jupiter.api.Assertions;
@@ -21,8 +23,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class ClientResource<%= capitalizeServerName %>UT {
+    <%_ if(authenticationTypeOauth2) { _%>
     @Mock
     private AccessToken oAuth;
+    <%_ } _%>
 
     @Mock
     private WebClientConfig webClientConfig;
@@ -30,13 +34,21 @@ class ClientResource<%= capitalizeServerName %>UT {
     private ClientResource<%= capitalizeServerName %> clientResource<%= capitalizeServerName %>;
 
     @BeforeEach
+    <%_ if(authenticationTypeOauth2) { _%>
     void init(){
         clientResource<%= capitalizeServerName %> = new ClientResource<%= capitalizeServerName %>(webClientConfig,oAuth);
     }
+    <%_ } else { _%>
+    void init() {
+        clientResource<%= capitalizeServerName %> = new ClientResource<%= capitalizeServerName %>(webClientConfig);
+    }
+    <%_ } _%>
 
     @Test
     void getClientNullCheck(){
+        <%_ if(authenticationTypeOauth2) { _%>
         when(oAuth.getToken()).thenReturn("");
+        <%_ } _%>
         Mono<ResponseEntity<Map<String, String>>> result = clientResource<%= capitalizeServerName %>.getClient();
         ResponseEntity<Map<String, String>> statusCode =  result.block();
         Assertions.assertEquals(statusCode.getStatusCode(), HttpStatusCode.valueOf(202));
@@ -44,7 +56,9 @@ class ClientResource<%= capitalizeServerName %>UT {
 
     @Test
     void getClient(){
+        <%_ if(authenticationTypeOauth2) { _%>
         when(oAuth.getToken()).thenReturn("access_token");
+        <%_ } _%>
         when(webClientConfig.serviceWebClient()).thenReturn(mockServiceWebClient());
         Mono<ResponseEntity<Map<String, String>>> response = clientResource<%= capitalizeServerName %>.getClient();
         ResponseEntity<Map<String, String>> statusCode =  response.block();

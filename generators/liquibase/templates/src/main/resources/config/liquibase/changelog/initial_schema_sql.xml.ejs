@@ -36,6 +36,7 @@
         The initial schema has the '00000000000001' id, so that it is over-written if we re-generate it.
     -->
     <changeSet id="00000000000001" author="jhipster">
+<%_ if ( authenticationTypeJwt || authenticationTypeOauth2 || authenticationTypeSession ) { _%>
 <%_ if (generateBuiltInUserEntity) {
         const idField = user.primaryKey.fields[0];
 _%>
@@ -163,6 +164,7 @@ _%>
         </loadData>
   <%_ } _%>
         <dropDefaultValue tableName="<%= user.entityTableName %>" columnName="created_date" columnDataType="${datetimeType}"/>
+<%_ } _%>
 <%_ } _%>
     </changeSet>
 

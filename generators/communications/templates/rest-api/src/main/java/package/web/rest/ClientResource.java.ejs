@@ -1,6 +1,7 @@
 package <%= packageName %>.web.rest.comm;
-
+<%_ if(authenticationTypeOauth2) { _%>
 import <%= packageName %>.config.webClient.AccessToken;
+<%_ } _%>
 import <%= packageName %>.config.webClient.WebClientConfig;
 
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ public class ClientResource<%= capitalizeServerName %> {
     @Autowired
     private WebClientConfig webClient;
 
+    <%_ if(authenticationTypeOauth2) { _%>
     @Autowired
     private AccessToken oAuthToken;
 
@@ -32,12 +34,18 @@ public class ClientResource<%= capitalizeServerName %> {
         this.webClient = webClientConfig;
         this.oAuthToken = oAuth;
     }
+    <%_ } else {_%>
+    public ClientResource<%= capitalizeServerName %>(WebClientConfig webClientConfig) {
+        this.webClient = webClientConfig;
+    }
+    <%_ } _%>
 
 
     @GetMapping("/services/<%= serverName %>")
     public Mono<ResponseEntity<Map<String,String>>> getClient() {
         try {
             Map<String,String> response = new HashMap<>();
+            <%_ if(authenticationTypeOauth2) { _%>
             String accessToken = oAuthToken.getToken();
             if(accessToken.isEmpty() || accessToken.isBlank() ){
                 log.error("No access token found");
@@ -45,12 +53,15 @@ public class ClientResource<%= capitalizeServerName %> {
                 response.put("cause","NO_ACCESS_TOKEN");
                 return  Mono.just(ResponseEntity.accepted().body(response));
             }
+            <%_ } _%>
             return webClient
                 .serviceWebClient()
                 .build()
                 .get()
                 .uri("http://<%= serverName %>/api/services/<%= serverName %>")
+                <%_ if(authenticationTypeOauth2) { _%>
                 .header(HttpHeaders.AUTHORIZATION, TOKEN_TYPE + accessToken)
+                <%_ } _%>
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<Map<String, String>>() {
                 }).flatMap(hashmap -> {

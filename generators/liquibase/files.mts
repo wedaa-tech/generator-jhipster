@@ -53,12 +53,12 @@ export const liquibaseFiles: WriteFileSection<LiquibaseGenerator, CommonClientSe
       ],
     },
     {
-      condition: generator => Boolean(generator.generateUserManagement),
+      condition: generator => (Boolean(generator.generateUserManagement) && (( generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession ))),
       path: SERVER_MAIN_RES_DIR,
       templates: ['config/liquibase/data/user.csv', 'config/liquibase/data/user_authority.csv'],
     },
     {
-      condition: generator => Boolean(generator.generateBuiltInAuthorityEntity),
+      condition: generator => (Boolean(generator.generateBuiltInAuthorityEntity) && (( generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession ))),
       path: SERVER_MAIN_RES_DIR,
       templates: ['config/liquibase/data/authority.csv'],
     },
