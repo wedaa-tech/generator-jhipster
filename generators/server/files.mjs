@@ -163,7 +163,7 @@ const accountFiles = {
       ],
     },
     {
-      condition: ((data => data.generateUserManagement) && (generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession)),
+      condition: ((data => data.generateUserManagement) && (generator => generator.authenticationTypeJwt || generator.authenticationTypeOauth2 || generator.authenticationTypeSession) && (generator => generator.databaseTypeSql || generator.databaseTypeMongodb || generator.databaseTypeCouchbase)),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['web/rest/vm/ManagedUserVM.java'],
