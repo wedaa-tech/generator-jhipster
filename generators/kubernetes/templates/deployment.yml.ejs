@@ -97,6 +97,14 @@ spec:
           value: prod,api-docs
         - name: JHIPSTER_CORS_ALLOWED_ORIGINS
           value: '<%= appConfigs.map(config => "http://" + config.baseName + "." + kubernetesNamespace + "." + ingressDomain).join(",") %>'
+        - name: OIDC_URL
+          value: http://keycloak.<%= kubernetesNamespace %>.<%= ingressDomain %>/realms/jhipster
+      <% appConfigs.forEach(function(appConfig) { %>
+        <%_ if (app.baseName.toLowerCase() !== appConfig.baseName.toLowerCase()) { _%>
+        - name: COMMUNICATION_<%= appConfig.baseName.toUpperCase() %>
+          value: <%= "http://" + appConfig.baseName.toLowerCase() + "." + kubernetesNamespace + ".svc.cluster.local:" + appConfig.serverPort %>
+        <%_ } _%>
+      <% }); %>
       <%_ if (minikube) { _%>
         - name: MINIKUBE_IP
           valueFrom:

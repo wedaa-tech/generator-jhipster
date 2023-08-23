@@ -351,3 +351,20 @@ jhipster:
 # ===================================================================
 
 # application:
+
+# ===================================================================
+
+oidc:
+  url: http://localhost:9080/realms/jhipster
+
+# ===================================================================
+
+communication:
+<%_ for (const commConfig of commConfigs) { _%>
+<%_ if (commConfig.server !== baseName) { _%>
+<%_ const matchingAppConfig = appConfigs.find(appConfig => appConfig.baseName === commConfig.server); _%>
+<%_ if (matchingAppConfig && commConfig.framework === 'rest-api') { _%>
+  <%= commConfig.server %>: http://localhost:<%= matchingAppConfig.serverPort %>
+<%_ } _%>
+<%_ } _%>
+<%_ } _%>
