@@ -279,8 +279,8 @@ public class SecurityConfiguration {
                     .pathMatchers("/management/health/**").permitAll()
                     .pathMatchers("/management/info").permitAll()
                     .pathMatchers("/management/prometheus").permitAll()
-                    .pathMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN))
-                    .pathMatchers("/rest/services/**").permitAll()
+                    .pathMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                    .pathMatchers("/rest/services/**").permitAll())
 <%_ if (authenticationTypeOauth2) { _%>
   <%_ if (!applicationTypeMicroservice) { _%>
             .oauth2Login(oauth2 -> oauth2.authorizationRequestResolver(authorizationRequestResolver(this.clientRegistrationRepository)))
