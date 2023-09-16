@@ -35,6 +35,7 @@ import {
   saveConfig,
   setupKubernetesConstants,
   derivedKubernetesPlatformProperties,
+  loadCommunicationConfigs
 } from './kubernetes-base.mjs';
 import jdlToJsonFieldConverter from '../../jdl/converters/jdl-to-json/jdl-to-json-field-converter.js';
 
@@ -74,6 +75,7 @@ export default class KubernetesGenerator extends BaseDockerGenerator {
       checkKubernetes,
       loadConfig,
       setupKubernetesConstants,
+      loadCommunicationConfigs
     };
   }
 

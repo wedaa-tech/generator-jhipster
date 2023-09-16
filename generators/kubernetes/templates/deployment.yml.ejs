@@ -100,10 +100,13 @@ spec:
         - name: OIDC_URL
           value: http://keycloak.<%= kubernetesNamespace %>.<%= ingressDomain %>/realms/jhipster
       <% appConfigs.forEach(function(appConfig) { %>
-        <%_ if (app.baseName.toLowerCase() !== appConfig.baseName.toLowerCase()) { _%>
+        <% const serverValue = appConfig.baseName.toLowerCase(); %>
+        <% const commConfig = commConfigs[app.baseName.toLowerCase()]; %>
+        <% const isServerValueInCommConfig = commConfig.some(function(config) { return config.server === serverValue; }); %>
+        <% if (isServerValueInCommConfig && app.baseName.toLowerCase() !== appConfig.baseName.toLowerCase()) { %>
         - name: COMMUNICATION_<%= appConfig.baseName.toUpperCase() %>
           value: <%= "http://" + appConfig.baseName.toLowerCase() + "." + kubernetesNamespace + ".svc.cluster.local:" + appConfig.serverPort %>
-        <%_ } _%>
+        <% } %>
       <% }); %>
       <%_ if (minikube) { _%>
         - name: MINIKUBE_IP
