@@ -21,6 +21,20 @@ export default async function writeCommunicationsFilesTask({ application }) {
   }
 
   if (this.communicationsFrameworkRestAPI) {
+    let communicationServersForBaseApp = [];
+    communications.forEach(comm =>{
+      if(comm.client === this.jhipsterConfig.baseName){
+        communicationServersForBaseApp.push(comm.server);
+      }
+    })
+    let appConfigs = this.appConfigs;
+    let isOauth2EnabledForAlestOneServer = false;
+    appConfigs.forEach(config => {
+      if (communicationServersForBaseApp.includes(config.baseName) && config.authenticationType === 'oauth2') {
+        isOauth2EnabledForAlestOneServer = true;
+      }
+    });
+    if(isOauth2EnabledForAlestOneServer){
       this.fs.copyTpl(
         this.templatePath(`${REST_API_MAIN_DIR}/java/package/config/webClient/AccessToken.java.ejs`),
         this.destinationPath(`${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/webClient/AccessToken.java')),
@@ -30,6 +44,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
           serviceDiscoveryEureka: this.serviceDiscoveryEureka
         }
       );
+    }
 
     this.fs.copyTpl(
       this.templatePath(`${REST_API_MAIN_DIR}/java/package/config/webClient/WebClientConfig.java.ejs`),
