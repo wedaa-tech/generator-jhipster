@@ -138,8 +138,8 @@ export default class KubernetesGenerator extends BaseDockerGenerator {
         2) useKeycloak (default: depends on usesIngress or istio) @cmi-tic-craxkumar */
         this.usesOauth2 = this.appConfigs.some(appConfig => appConfig.authenticationTypeOauth2);
         this.usesIngress = this.kubernetesServiceType === 'Ingress' && this.ingressType === 'nginx';
-        this.useKeycloak = (this.usesOauth2 && this.usesIngress) || (this.usesOauth2 && this.istio);
-        this.externalLB  = (this.usesOauth2 && this.ingressDomain === "");
+        this.useKeycloak = this.usesOauth2 && (this.usesIngress || this.istio || this.minikube);
+        this.externalLB  = (this.usesOauth2 && this.ingressDomain === "" && this.minikube === false);
       },
       saveConfig,
     };
