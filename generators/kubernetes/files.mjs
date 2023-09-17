@@ -68,7 +68,7 @@ export function writeFiles() {
         if (this.app.searchEngine === ELASTICSEARCH) {
           this.writeFile('db/elasticsearch.yml.ejs', `${appOut}/${appName}-elasticsearch.yml`);
         }
-        if (this.app.applicationType === GATEWAY || this.app.applicationType === MONOLITH || this.app.applicationType === MICROSERVICE) {
+        if (this.app.applicationType === GATEWAY || this.app.applicationType === MONOLITH) {
           if (this.istio) {
             this.writeFile('istio/gateway.yml.ejs', `${appOut}/${appName}-gateway.yml`);
           } else if (this.kubernetesServiceType === 'Ingress') {
