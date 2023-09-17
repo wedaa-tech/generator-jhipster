@@ -59,9 +59,14 @@ class ClientResource<%= capitalizeServerName %>UT {
         <%_ if(authenticationTypeOauth2) { _%>
         when(oAuth.getToken()).thenReturn("access_token");
         <%_ } _%>
-        when(webClientConfig.getWebClient()).thenReturn((WebClient.builder().build()));
+        when(webClientConfig.serviceWebClient()).thenReturn(mockServiceWebClient());
         Mono<ResponseEntity<Map<String, String>>> response = clientResource<%= capitalizeServerName %>.getClient();
         ResponseEntity<Map<String, String>> statusCode =  response.block();
         Assertions.assertEquals(statusCode.getStatusCode(), HttpStatusCode.valueOf(200));
     }
+
+    WebClient.Builder mockServiceWebClient() {
+        return WebClient.builder();
+    }
+
 }

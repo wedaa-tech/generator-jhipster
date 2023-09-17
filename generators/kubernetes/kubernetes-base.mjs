@@ -17,7 +17,8 @@
  * limitations under the License.
  */
 import _ from 'lodash';
-
+import fs from 'fs';
+import path from 'path';
 import shelljs from 'shelljs';
 import chalk from 'chalk';
 import crypto from 'crypto';
@@ -168,4 +169,23 @@ export function setupHelmConstants() {
   this.HELM_POSTGRESQL = HELM_POSTGRESQL;
   this.HELM_MOGODB_REPLICASET = HELM_MOGODB_REPLICASET;
   this.HELM_COUCHBASE_OPERATOR = HELM_COUCHBASE_OPERATOR;
+}
+
+export function loadCommunicationConfigs() {
+  const basePath = this.destinationPath('../');
+  let commConfigsMap = {};
+  const items = fs.readdirSync(basePath);
+  const dirs = items.filter((item) => fs.statSync(path.join(basePath, item)).isDirectory());
+  for (const dir of dirs) {
+    if (this.fs.exists(`${basePath}/${dir}/comm.yo-rc.json`)) {
+      try {
+        const commConfig = JSON.parse(fs.readFileSync(`${basePath}/${dir}/comm.yo-rc.json`));
+        commConfigsMap[dir] = commConfig;
+      } catch (err) {
+        throw new Error(`Cannot parse the file comm.yo-rc.json in '${basePath}/${dir}'`);
+      }
+    }
+  }
+  this.commConfigs = commConfigsMap;
+  return commConfigsMap;
 }

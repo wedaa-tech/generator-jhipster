@@ -1038,6 +1038,10 @@ templates: ${JSON.stringify(existingTemplates, null, 2)}`;
    */
   loadDerivedAppConfig(dest = this) {
     this.loadDerivedMicroserviceAppConfig(dest);
+    // Load communication configuration to destination
+    dest.commConfigs = this.jhipsterConfig.commConfigs;
+    // Load appConfigs configuration to destination
+    dest.appConfigs = this.jhipsterConfig.appConfigs;
     dest.applicationTypeGateway = dest.applicationType === GATEWAY;
     dest.applicationTypeMonolith = dest.applicationType === MONOLITH;
     dest.applicationTypeMicroservice = dest.applicationType === MICROSERVICE;

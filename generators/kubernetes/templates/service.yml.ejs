@@ -40,13 +40,8 @@ spec:
 <%_ } _%>
   ports:
   - name: http
-<%_ if (!app.serviceDiscoveryAny) { _%>
-    port: 80
-    targetPort: <%= (app.clientFramework === 'react' || app.clientFramework === 'angular' || app.clientFramework === 'vue')  ? 80 :  app.serverPort  %>
-<%_ } else { _%>
-    port: <%= app.serverPort %>
+    port: <%= (app.clientFramework === 'react' || app.clientFramework === 'angular' || app.clientFramework === 'vue')  ? 80 :  app.serverPort  %>
   <%_ if (minikube && app.applicationTypeGateway) { _%>
     targetPort: <%= app.serverPort %>
     nodePort: 30200
   <%_ } _%>
-<%_ } _%>

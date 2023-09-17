@@ -12,23 +12,16 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
 
     public WebClient getWebClient() {
-
-        // way to retrieve  the access_token from SecurityContextHolder
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        System.out.println("Authentication: " +authentication);
-//        String token = null;
-//        if (authentication instanceof JwtAuthenticationToken jwtAuthenticationToken)
-//            token = jwtAuthenticationToken.getToken().getTokenValue();
-
         return WebClient.builder()
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString())
             .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON.toString())
             .build();
     }
-
+<%_ if(serviceDiscoveryEureka){  _%>
     @Bean
     @LoadBalanced
     public WebClient.Builder serviceWebClient() {
         return WebClient.builder();
     }
+<%_ }  _%>
 }

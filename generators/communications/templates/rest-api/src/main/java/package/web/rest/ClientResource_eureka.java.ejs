@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -24,9 +23,6 @@ public class ClientResource<%= capitalizeServerName %> {
 
     @Autowired
     private WebClientConfig webClient;
-
-    @Value("${communication.<%= serverName.toLowerCase() %>}")
-    private String <%= serverName.toLowerCase() %>Address = "";
 
     <%_ if(authenticationTypeOauth2) { _%>
     @Autowired
@@ -59,9 +55,10 @@ public class ClientResource<%= capitalizeServerName %> {
             }
             <%_ } _%>
             return webClient
-                .getWebClient()
+                .serviceWebClient()
+                .build()
                 .get()
-                .uri(<%= serverName.toLowerCase() %>Address.concat("/api/services/<%= serverName.toLowerCase() %>"))
+                .uri("http://<%= serverName %>/api/services/<%= serverName %>")
                 <%_ if(authenticationTypeOauth2) { _%>
                 .header(HttpHeaders.AUTHORIZATION, TOKEN_TYPE + accessToken)
                 <%_ } _%>

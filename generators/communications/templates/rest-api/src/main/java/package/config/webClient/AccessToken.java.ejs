@@ -26,7 +26,7 @@ public class AccessToken {
 
     private static String TOKEN_URL = "/protocol/openid-connect/token";
 
-    @Value("${spring.security.oauth2.client.provider.oidc.issuer-uri}")
+    @Value("${oidc.url}")
     private String oauthUrl;
 
     public String  getToken() {
