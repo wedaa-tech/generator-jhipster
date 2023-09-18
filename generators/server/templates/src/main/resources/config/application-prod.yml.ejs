@@ -215,7 +215,7 @@ server:
 
 jhipster:
   cors:
-    allowed-origins: 'http://localhost:3000,https://localhost:4200'
+    allowed-origins: 'http://localhost:3000,http://localhost:4200<%_ appConfigs.forEach(appConfig => { %><%= appConfig.clientFramework !== 'no' ? `,http://localhost:${appConfig.serverPort}` : '' %><%_ }); %>'
     allowed-origin-patterns: 'https://*.githubpreview.dev'
     allowed-methods: '*'
     allowed-headers: '*'
