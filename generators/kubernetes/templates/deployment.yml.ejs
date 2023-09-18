@@ -101,13 +101,40 @@ spec:
           value: http://keycloak.<%= kubernetesNamespace %>.<%= ingressDomain %>/realms/jhipster
       <% appConfigs.forEach(function(appConfig) { %>
         <% const serverValue = appConfig.baseName.toLowerCase(); %>
-        <% const commConfig = commConfigs[app.baseName.toLowerCase()]; %>
-        <% const isServerValueInCommConfig = commConfig.some(function(config) { return config.server === serverValue; }); %>
-        <% if (isServerValueInCommConfig && app.baseName.toLowerCase() !== appConfig.baseName.toLowerCase()) { %>
+          <% const commConfig = commConfigs[app.baseName.toLowerCase()]; %>
+            <% const isServerValueInCommConfig = commConfig.some(function(config) { return config.server === serverValue; }); %>
+              <% if (isServerValueInCommConfig && app.baseName.toLowerCase() !== appConfig.baseName.toLowerCase()) { %>
         - name: COMMUNICATION_<%= appConfig.baseName.toUpperCase() %>
           value: <%= "http://" + appConfig.baseName.toLowerCase() + "." + kubernetesNamespace + ".svc.cluster.local:" + appConfig.serverPort %>
         <% } %>
       <% }); %>
+    <%_ if (app.reactive && !app.serviceDiscoveryEureka) { _%>
+      <%
+        let incrementalIndex = 0; // Initialize the incremental index outside the loop 
+      %>
+      <% appConfigs.forEach(function(appConfig) { %>
+        <% const serverValue = appConfig.baseName.toLowerCase(); %>
+          <% const commConfig = commConfigs[app.baseName.toLowerCase()]; %>
+            <% const isServerValueInCommConfig = commConfig.some(function(config) { return config.server === serverValue; }); %>
+              <% if (isServerValueInCommConfig && app.baseName.toLowerCase() !== appConfig.baseName.toLowerCase()) { %>
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_<%= incrementalIndex %>_ID
+          value: <%= appConfig.baseName.toLowerCase() %>
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_<%= incrementalIndex %>_URI
+          value: <%= "http://" + appConfig.baseName.toLowerCase() + "." + kubernetesNamespace + ".svc.cluster.local:" + appConfig.serverPort + "/"%>
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_<%= incrementalIndex %>_PREDICATES_0_NAME
+          value: "Path"
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_<%= incrementalIndex %>_PREDICATES_0_ARGS_PATTERN
+          value: "/services/<%= appConfig.baseName.toLowerCase() %>/**"
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_<%= incrementalIndex %>_FILTERS_0_NAME
+          value: "RewritePath"
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_<%= incrementalIndex %>_FILTERS_0_ARGS_REGEXP
+          value: "/services/<%= appConfig.baseName.toLowerCase() %>/(?<remaining>.*)"
+        - name: SPRING_CLOUD_GATEWAY_ROUTES_<%= incrementalIndex %>_FILTERS_0_ARGS_REPLACEMENT
+          value: "/${remaining}"
+        <% incrementalIndex++; %>
+          <% } %>
+      <% }); %>
+    <%_ } _%>
       <%_ if (minikube) { _%>
         - name: MINIKUBE_IP
           valueFrom:

@@ -10,6 +10,13 @@ export default async function writeCommunicationsFilesTask({ application }) {
   // Write client files
   Object.assign(this, application);
 
+  if (this.communicationsFrameworkRabbitMQ || this.communicationsFrameworkRestAPI) {
+    this.fs.copyTpl(
+      this.templatePath(`COMMUNICATION.md.ejs`),
+      this.destinationPath(`COMMUNICATION.md`)
+    );
+  }
+
   if (this.communicationsFrameworkRabbitMQ) {
     this.fs.copyTpl(
       this.templatePath(`${RABBITMQ_MAIN_DIR}/java/package/domain/RabbitMessageModel.java.ejs`),

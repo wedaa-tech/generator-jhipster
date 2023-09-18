@@ -192,6 +192,27 @@ spring:
       default-filters:
         - <% if (authenticationTypeJwt) { %>JWTRelay<% } else { %>TokenRelay<% } %>
       <%_ } _%>
+    <%_ if (!serviceDiscoveryEureka) { _%>  
+      routes:
+      <%_ for (const commConfig of commConfigs) { _%>
+        <%_ if (commConfig.server !== baseName) { _%>
+          <%_ const matchingAppConfig = appConfigs.find(appConfig => appConfig.baseName === commConfig.server); _%>
+            <%_ if (matchingAppConfig && commConfig.framework === 'rest-api') { _%>
+        - id: <%= commConfig.server %>
+          uri: http://localhost:<%= matchingAppConfig.serverPort %>/
+          predicates:
+            - name: Path
+              args:
+                pattern: '/services/<%= commConfig.server %>/**'
+          filters:
+            - name: RewritePath
+              args:
+                regexp: '/services/<%= commConfig.server %>/(?<remaining>.*)'
+                replacement: '/${remaining}'    
+          <%_ } _%>
+        <%_ } _%>
+      <%_ } _%>
+    <%_ } _%>
       discovery:
         locator:
           enabled: true
