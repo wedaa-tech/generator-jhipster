@@ -52,6 +52,7 @@ export const GENERATOR_GRADLE = 'gradle';
 export const GENERATOR_HEROKU = 'heroku';
 export const GENERATOR_INFO = 'info';
 export const GENERATOR_INIT = 'init';
+export const GENERATOR_INSTRUCTIONS = 'instructions';
 export const GENERATOR_JAVA = 'java';
 export const GENERATOR_KAFKA = 'kafka';
 export const GENERATOR_RABBITMQ = 'rabbitmq'; // cmi-tic-varun

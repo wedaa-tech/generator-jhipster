@@ -63,6 +63,7 @@ import {
   GENERATOR_SPRING_CACHE,
   GENERATOR_SPRING_WEBSOCKET,
   GENERATOR_SQL,
+  GENERATOR_INSTRUCTIONS,
 } from '../generator-list.mjs';
 import BaseApplicationGenerator from '../base-application/index.mjs';
 import { writeFiles } from './files.mjs';
@@ -319,6 +320,8 @@ export default class JHipsterServerGenerator extends BaseApplicationGenerator {
         if ([EHCACHE, CAFFEINE, HAZELCAST, INFINISPAN, MEMCACHED, REDIS].includes(cacheProvider)) {
           await this.composeWithJHipster(GENERATOR_SPRING_CACHE);
         }
+
+        await this.composeWithJHipster(GENERATOR_INSTRUCTIONS);
       },
     });
   }
