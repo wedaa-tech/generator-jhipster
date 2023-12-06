@@ -1,0 +1,37 @@
+# HOW TO RUN
+
+Your prototype is composed of the following components:
+
+<%_ if (uiApps?.length) { _%>
+### UI (Client frameworks)
+<%_ uiApps.forEach((uiApp) =>  { _%>
+- [<%= uiApp %>](<%= uiApp %>/README.md)
+<%_ }) _%>
+<%_ } _%>
+
+<%_ if (beApps?.length) { _%>
+### Backend (Microservices)
+<%_ beApps.forEach((beApp) =>  { _%>
+- [<%= beApp %>](<%= beApp %>/README.md)
+<%_ }) _%>
+<%_ } _%>
+
+### Infrastructure as a Code
+If a Deployment Infrastructure is chosen while generating code, additional 2 components will be generated to deploy the prototype.
+- Terraform (Contains IaaC to create and manage resources)
+- Kubernetes (Contains manifest files for the you prototype components)
+- *auto-deploy* & *auto-destroy* scripts in Terraform directory (Helper scripts for rapid orchestration)
+
+Please boot up the components in the below order to run the prototype:
+<%_ if (beApps?.length) { _%>
+<%_ beApps.forEach((beApp) =>  { _%>
+- <%= beApp %>
+<%_ }) _%>
+<%_ } _%>
+<%_ if (uiApps?.length) { _%>
+<%_ uiApps.forEach((uiApp) =>  { _%>
+- <%= uiApp %>
+<%_ }) _%>
+<%_ } _%>
+
+Please refer to the component level README's for component level details.
