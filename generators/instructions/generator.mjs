@@ -21,35 +21,35 @@ import { GENERATOR_INSTRUCTIONS, GENERATOR_BOOTSTRAP_APPLICATION } from '../gene
 import writeInstructions from './files.mjs';
 
 export default class InstructionsGenerator extends BaseApplicationGenerator {
-    async beforeQueue() {
-        await this.dependsOnJHipster(GENERATOR_BOOTSTRAP_APPLICATION);
-        if (!this.fromBlueprint) {
-            await this.composeWithBlueprints(GENERATOR_INSTRUCTIONS);
-        }
+  async beforeQueue() {
+    await this.dependsOnJHipster(GENERATOR_BOOTSTRAP_APPLICATION);
+    if (!this.fromBlueprint) {
+      await this.composeWithBlueprints(GENERATOR_INSTRUCTIONS);
     }
+  }
 
-    get initializing() {
-        return {
-            getSharedConfig() {
-                this.loadAppConfig();
-                this.loadServerConfig();
-                this.loadDerivedAppConfig();
-                this.loadDerivedServerConfig();
-            },
-        };
-    }
+  get initializing() {
+    return {
+      getSharedConfig() {
+        this.loadAppConfig();
+        this.loadServerConfig();
+        this.loadDerivedAppConfig();
+        this.loadDerivedServerConfig();
+      },
+    };
+  }
 
-    get [BaseApplicationGenerator.INITIALIZING]() {
-        return this.delegateTasksToBlueprint(() => this.initializing);
-    }
+  get [BaseApplicationGenerator.INITIALIZING]() {
+    return this.delegateTasksToBlueprint(() => this.initializing);
+  }
 
-    get writing() {
-        return this.asWritingTaskGroup({
-            writeInstructions,
-        });
-    }
+  get writing() {
+    return this.asWritingTaskGroup({
+      writeInstructions,
+    });
+  }
 
-    get [BaseApplicationGenerator.WRITING]() {
-        return this.delegateTasksToBlueprint(() => this.writing);
-    }
+  get [BaseApplicationGenerator.WRITING]() {
+    return this.delegateTasksToBlueprint(() => this.writing);
+  }
 }

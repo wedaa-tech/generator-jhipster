@@ -20,18 +20,18 @@ import { applicationTypes } from '../../jdl/jhipster/index.mjs';
 const { GATEWAY, MICROSERVICE } = applicationTypes;
 
 export default async function writeInstructions({ application }) {
-    Object.assign(this, application);
+  Object.assign(this, application);
 
-    this.uiApps = [];
-    this.beApps = [];
-    for (let i = 0; i < this.appConfigs.length; i++) {
-        this.app = this.appConfigs[i];
-        if (this.app.applicationType === GATEWAY) {
-            this.uiApps.push(this.app.baseName);
-        } else if (this.app.applicationType === MICROSERVICE) {
-            this.beApps.push(this.app.baseName);
-        }
+  this.uiApps = [];
+  this.beApps = [];
+  for (let i = 0; i < this.appConfigs.length; i++) {
+    this.app = this.appConfigs[i];
+    if (this.app.applicationType === GATEWAY) {
+      this.uiApps.push(this.app.baseName);
+    } else if (this.app.applicationType === MICROSERVICE) {
+      this.beApps.push(this.app.baseName);
     }
+  }
 
-    this.writeFile('HOW_TO_RUN.md.ejs', '../HOW_TO_RUN.md');
+  this.writeFile('HOW_TO_RUN.md.ejs', '../HOW_TO_RUN.md');
 }
