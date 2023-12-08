@@ -22,7 +22,12 @@ If a Deployment Infrastructure is chosen while generating code, additional 2 com
 - Kubernetes (Contains manifest files for the you prototype components)
 - *auto-deploy* & *auto-destroy* scripts in Terraform directory (Helper scripts for rapid orchestration)
 
-Please boot up the components in the below order to run the prototype:
+### Common Prerequisites
+
+- Docker Engine >= 24.0
+- Docker Desktop (optional) >= 4.25
+
+### Please boot up the components in the below order to run the prototype:
 <%_ if (beApps?.length) { _%>
 <%_ beApps.forEach((beApp) =>  { _%>
 - <%= beApp %>
