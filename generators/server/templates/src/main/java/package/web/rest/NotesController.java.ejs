@@ -1,0 +1,40 @@
+package <%= packageName %>.web.rest;
+
+import <%= packageName %>.domain.Note;
+import <%= packageName %>.service.NotesService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/notes")
+public class NotesController {
+
+    @Autowired
+    private NotesService notesService;
+
+
+    @PostMapping
+    public ResponseEntity<Note> addNote(@RequestBody Note note){
+        return ResponseEntity.ok(notesService.addnote(note));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Note>> getNotes(){
+        return ResponseEntity.ok(notesService.getNotes());
+    }
+
+    @PatchMapping
+    public ResponseEntity<Note> updateNote(@RequestParam String id, @RequestBody Note note){
+        return ResponseEntity.ok(notesService.updateNote(id, note));
+    }
+
+    @DeleteMapping
+    public void deleteNote(@RequestParam String id){
+        notesService.deleteNote(id);
+    }
+
+
+}

@@ -77,7 +77,7 @@
 <%_ } _%>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <!-- adding the file when withExample is true @cmi-tic-harika -->
+    <!-- adding the file when withExample is true -->
     <%_ if(withExample) { _%>
       <include file="config/liquibase/changelog/20230228095256_added_entity_Reminder.xml" relativeToChangelogFile="false"/>
     <%_ } _%>

@@ -1,0 +1,44 @@
+package <%= packageName %>.service;
+
+import <%= packageName %>.domain.Note;
+import <%= packageName %>.repository.NotesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+@Service
+public class NotesService {
+
+    @Autowired
+    private NotesRepository notesRepository;
+
+    public Note addnote(Note note){
+        return notesRepository.save(note);
+    }
+
+    public List<Note> getNotes() {
+        return notesRepository.findAll();
+    }
+
+    public Note updateNote(String  id, Note note) {
+        Optional<Note> optionalNote  = notesRepository.findById(id);
+        if(optionalNote.isPresent()) {
+            Note oldNote = optionalNote.get();
+            if(Objects.nonNull(note.getSubject()) ){
+                oldNote.setSubject(note.getSubject());
+            }
+            if(Objects.nonNull(note.getDescription()) ){
+                oldNote.setDescription(note.getDescription());
+            }
+            return notesRepository.save(oldNote);
+        } 
+        return null;
+    }
+
+    public void deleteNote(String id) {
+        notesRepository.deleteById(id);
+    }
+}

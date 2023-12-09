@@ -1,0 +1,51 @@
+package <%= packageName %>.domain;
+
+<%_ if (prodDatabaseTypePostgres) { _%>
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+<%_ } _%>
+<%_ if (databaseTypeMongodb) { _%>
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+<%_ } _%> 
+
+<%_ if (prodDatabaseTypePostgres) { _%>
+@Entity
+@Table(name = "note")
+<%_ } _%> 
+<%_ if (databaseTypeMongodb) { _%>
+@Document
+<%_ } _%> 
+public class Note {
+    @Id
+    <%_ if (prodDatabaseTypePostgres) { _%>
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    <%_ } _%> 
+    private String id;
+
+    private String subject;
+
+    private String description;
+
+    public String getId() {return id;}
+
+    public void setId(String id) {this.id = id;}
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+}
