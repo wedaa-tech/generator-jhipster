@@ -348,6 +348,37 @@ const swaggerFiles = {
   ],
 };
 
+const NotesApplicationFiles = {
+  swagger: [
+    {
+      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
+      path: `${SERVER_MAIN_SRC_DIR}package/`,
+      renameTo: moveToJavaPackageSrcDir,
+      templates: ['service/NotesService.java'],
+    },
+    {
+      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
+      path: `${SERVER_MAIN_SRC_DIR}package/`,
+      renameTo: moveToJavaPackageSrcDir,
+      templates: ['repository/NotesRepository.java'],
+    },
+    {
+      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
+      path: `${SERVER_MAIN_SRC_DIR}package/`,
+      renameTo: moveToJavaPackageSrcDir,
+      templates: ['web/rest/NotesController.java'],
+    },
+    {
+      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
+      path: `${SERVER_MAIN_SRC_DIR}package/`,
+      renameTo: moveToJavaPackageSrcDir,
+      templates: ['domain/Note.java'],
+    },
+  ],
+};
+
+
+
 /**
  * The default is to use a file path string. It implies use of the template method.
  * For any other config an object { file:.., method:.., template:.. } can be used
@@ -645,7 +676,8 @@ export const serverFiles = mergeSections(
   addSectionsCondition(userManagementFiles, context => context.generateUserManagement),
   addSectionsCondition(imperativeConfigFiles, context => !context.reactive),
   addSectionsCondition(reactiveConfigFiles, context => context.reactive),
-  addSectionsCondition(swaggerFiles, context => context.enableSwaggerCodegen)
+  addSectionsCondition(swaggerFiles, context => context.enableSwaggerCodegen),
+  NotesApplicationFiles,
 );
 
 /**
