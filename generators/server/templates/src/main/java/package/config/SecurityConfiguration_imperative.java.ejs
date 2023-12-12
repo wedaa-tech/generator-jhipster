@@ -108,9 +108,7 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-<%_ if (authenticationTypeOauth2 || !applicationTypeMicroservice) { _%>
 import static org.springframework.security.config.Customizer.withDefaults;
-<%_ } _%>
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
@@ -151,9 +149,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
         http
-<%_ if (!applicationTypeMicroservice) { _%>
             .cors(withDefaults())
-<%_ } _%>
             .csrf(csrf -> csrf
 <%_ if (authenticationUsesCsrf && !applicationTypeMicroservice) { _%>
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
