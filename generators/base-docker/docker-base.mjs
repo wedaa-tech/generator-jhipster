@@ -103,6 +103,8 @@ export function loadConfigs() {
   this.monolithicNb = 0;
   this.microserviceNb = 0;
   const serverPort = 8080;
+  // app nodePort start's from 30200
+  const nodePort = 30200;
 
   // Loading configs
   this.logger.debug(`Apps folders: ${this.appsFolders}`);
@@ -115,6 +117,8 @@ export function loadConfigs() {
     if (this.fs.exists(`${path}/.yo-rc.json`)) {
       const config = getConfigWithDefaults(removeFieldsWithNullishValues(this.getJhipsterConfig(`${path}/.yo-rc.json`).getAll()));
       config.composePort = serverPort + index;
+      // configure nodePort 
+      config.nodePort = nodePort + index;
 
       // added log @cmi-tic-craxkumar
       this.logger.debug(
