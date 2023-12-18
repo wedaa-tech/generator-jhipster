@@ -70,8 +70,14 @@ logSummary() {
     echo ""
         echo "#####################################################"
         echo "Please find the below useful endpoints,"
-        echo "Gateway - http://minikube_ip_placeholder:30200"
+        <%_ appConfigs.forEach((appConfig) =>  { _%>
+            <%_ if (appConfig.applicationTypeGateway) {_%>
+        echo "<%= appConfig.baseName %> - http://minikube_ip_placeholder:<%= appConfig.nodePort %>/"
+            <%_ } _%>
+          <%_ }) _%>
+        <%_ if (useKeycloak) { _%> 
         echo "Keycloak - http://minikube_ip_placeholder:30001/"
+        <%_ } _%>
     <%_ if (this.useECK) { _%>
         echo "Elasticsearch - https://minikube_ip_placeholder:30300/"
         echo "Kibana - https://minikube_ip_placeholder:30301/"

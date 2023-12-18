@@ -795,6 +795,9 @@ templates: ${JSON.stringify(existingTemplates, null, 2)}`;
     if (options.skipJhipsterDependencies !== undefined) {
       this.jhipsterConfig.skipJhipsterDependencies = options.skipJhipsterDependencies;
     }
+    if (options.minikube !== undefined) {
+      this.jhipsterConfig.minikube = options.minikube;
+    }
     if (options.incrementalChangelog !== undefined) {
       this.jhipsterConfig.incrementalChangelog = options.incrementalChangelog;
     }
