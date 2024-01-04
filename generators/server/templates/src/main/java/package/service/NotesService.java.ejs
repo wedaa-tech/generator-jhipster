@@ -11,11 +11,21 @@ import java.util.Optional;
 
 @Service
 public class NotesService {
-
+    <%_ if (databaseTypeMongodb) { _%>
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+    <%_ } _%> 
+    
     @Autowired
     private NotesRepository notesRepository;
 
     public Note addnote(Note note){
+        <%_ if (databaseTypeMongodb) { _%>
+        if (note.getId() == null) {
+            note.setId(sequenceGeneratorService.generateSequence(Note.SEQUENCE_NAME));
+        }
+        <%_ } _%> 
+
         return notesRepository.save(note);
     }
 
@@ -23,7 +33,7 @@ public class NotesService {
         return notesRepository.findAll();
     }
 
-    public Note updateNote(String  id, Note note) {
+    public Note updateNote(Long  id, Note note) {
         Optional<Note> optionalNote  = notesRepository.findById(id);
         if(optionalNote.isPresent()) {
             Note oldNote = optionalNote.get();
@@ -38,7 +48,7 @@ public class NotesService {
         return null;
     }
 
-    public void deleteNote(String id) {
+    public void deleteNote(Long id) {
         notesRepository.deleteById(id);
     }
 }

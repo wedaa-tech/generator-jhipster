@@ -374,6 +374,12 @@ const NotesApplicationFiles = {
       renameTo: moveToJavaPackageSrcDir,
       templates: ['domain/Note.java'],
     },
+    {
+      condition: generator => generator.databaseTypeMongodb,
+      path: `${SERVER_MAIN_SRC_DIR}package/`,
+      renameTo: moveToJavaPackageSrcDir,
+      templates: ['service/SequenceGeneratorService.java', 'domain/Sequence.java'],
+    },
   ],
 };
 
