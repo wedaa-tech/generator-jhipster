@@ -11,12 +11,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 <%_ if (prodDatabaseTypePostgres) { _%>
 @EnableJpaRepositories
-public interface NotesRepository extends JpaRepository<Note, String> {
+public interface NotesRepository extends JpaRepository<Note, Long> {
 
 }
 <%_ } _%>
 <%_ if (databaseTypeMongodb) { _%>
-public interface NotesRepository extends MongoRepository<Note, String> {
+public interface NotesRepository extends MongoRepository<Note, Long> {
     
 }
 <%_ } _%>

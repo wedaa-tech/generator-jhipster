@@ -187,7 +187,7 @@ _%>
     
     <changeSet author="jhipster" id="00000000000003" >
     <createTable tableName="note">
-        <column  name="id" type="VARCHAR">
+        <column name="id" type="BIGINT" autoIncrement="true" startWith="9">
             <constraints primaryKey="true" primaryKeyName="notePK"/>
         </column>
         <column name="subject" type="VARCHAR"/>
