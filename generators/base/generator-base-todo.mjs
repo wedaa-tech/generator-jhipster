@@ -1006,8 +1006,8 @@ templates: ${JSON.stringify(existingTemplates, null, 2)}`;
     dest.withAdminUi = config.withAdminUi;
     dest.communicationsList = config.communicationsList;
     // declaring withExample param in clint-side @cmi-tic-harika
-    (dest.withExample = config.withExample), (dest.gatewayServerPort = config.gatewayServerPort);
-
+    (dest.withExample = config.withExample), 
+    (dest.gatewayServerPort = config.gatewayServerPort);
     dest.capitalizedBaseName = config.capitalizedBaseName;
     dest.dasherizedBaseName = config.dasherizedBaseName;
     dest.humanizedBaseName = config.humanizedBaseName;
@@ -1183,6 +1183,7 @@ templates: ${JSON.stringify(existingTemplates, null, 2)}`;
     dest.databaseType = config.databaseType;
     dest.databaseMigration = config.databaseMigration;
     dest.devDatabaseType = config.devDatabaseType;
+    dest.databasePort = config.databasePort;
     dest.prodDatabaseType = config.prodDatabaseType;
     dest.incrementalChangelog = config.incrementalChangelog;
     dest.reactive = config.reactive;

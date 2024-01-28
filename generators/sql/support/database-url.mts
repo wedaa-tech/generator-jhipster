@@ -22,13 +22,13 @@ import databaseData, { type getData } from './database-data.mjs';
 
 const { ORACLE, MYSQL, POSTGRESQL, MARIADB, MSSQL, H2_DISK, H2_MEMORY } = databaseTypes;
 
-type DatabaseUrlOptions = Parameters<getData>[0] & { databaseName?: string; hostname?: string; skipExtraOptions?: boolean };
+type DatabaseUrlOptions = Parameters<getData>[0] & { databaseName?: string; hostname?: string; skipExtraOptions?: boolean; databasePort?: number};
 
 export default function getDatabaseUrl(databaseType: string, protocol: string, options: DatabaseUrlOptions = {}): string {
   if (!protocol) {
     throw new Error('protocol is required');
   }
-  const { databaseName, hostname, skipExtraOptions } = options;
+  const { databaseName, hostname, skipExtraOptions, databasePort } = options;
   if (!databaseName) {
     throw new Error("option 'databaseName' is required");
   }
@@ -52,10 +52,11 @@ export default function getDatabaseUrl(databaseType: string, protocol: string, o
   }
   const { port = '', protocolSuffix = '', extraOptions = '', localDirectory = options.localDirectory } = databaseDataForType;
   let url = `${protocol}:${protocolSuffix}`;
+  let dbPort = ':' + options.databasePort + '/';
   if (hostname || localDirectory) {
-    url = `${url}${localDirectory || hostname + port}${databaseName}`;
+    url = `${url}${localDirectory || hostname + dbPort}${databaseName}`;
   } else {
-    url = `${url}${databaseName}${port}`;
+    url = `${url}${databaseName}${options.databasePort}`;
   }
   return `${url}${skipExtraOptions ? '' : extraOptions}`;
 }

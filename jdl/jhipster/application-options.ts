@@ -41,7 +41,7 @@ const { CASSANDRA, COUCHBASE, MARIADB, MONGODB, MSSQL, MYSQL, NEO4J, ORACLE, POS
 const NO_DATABASE = databaseTypes.NO;
 const { ECK, NO_LOG } = logManagementTypes;
 const { JWT, OAUTH2, SESSION, } = authenticationTypes;
-const  NO_AUTHENTICATION_PROVIDER = authenticationTypes.NO;
+const NO_AUTHENTICATION_PROVIDER = authenticationTypes.NO;
 const { MAVEN, GRADLE } = buildToolTypes;
 const { CAFFEINE, EHCACHE, HAZELCAST, INFINISPAN, MEMCACHED, REDIS } = cacheTypes;
 
@@ -90,6 +90,7 @@ const optionNames = {
   CREATION_TIMESTAMP: 'creationTimestamp',
   DATABASE_TYPE: 'databaseType',
   DEV_DATABASE_TYPE: 'devDatabaseType',
+  DATABASE_PORT: 'databasePort',  // adding new option for DatabasePort
   DTO_SUFFIX: 'dtoSuffix',
   EMBEDDABLE_LAUNCH_SCRIPT: 'embeddableLaunchScript',
   ENABLE_HIBERNATE_CACHE: 'enableHibernateCache',
@@ -187,6 +188,7 @@ export const jhipsterOptionValues: Record<string, JDLApplicationOptionValue> = {
     [ORACLE]: ORACLE,
     [MSSQL]: MSSQL,
   },
+  [optionNames.DATABASE_PORT]: 5432,
   [optionNames.DTO_SUFFIX]: 'DTO',
   [optionNames.EMBEDDABLE_LAUNCH_SCRIPT]: true,
   [optionNames.ENABLE_HIBERNATE_CACHE]: true,
@@ -300,6 +302,7 @@ export const jhipsterOptionTypes: Record<string, JDLApplicationOptionType> = {
   [optionNames.REMEMBER_ME_KEY]: { type: ApplicationOptionTypes.STRING },
   [optionNames.SEARCH_ENGINE]: { type: ApplicationOptionTypes.STRING },
   [optionNames.SERVER_PORT]: { type: ApplicationOptionTypes.INTEGER },
+  [optionNames.DATABASE_PORT]: { type: ApplicationOptionTypes.INTEGER },
   [optionNames.SERVICE_DISCOVERY_TYPE]: { type: ApplicationOptionTypes.STRING },
   [optionNames.SKIP_CLIENT]: { type: ApplicationOptionTypes.BOOLEAN },
   [optionNames.SKIP_GIT]: { type: ApplicationOptionTypes.BOOLEAN },

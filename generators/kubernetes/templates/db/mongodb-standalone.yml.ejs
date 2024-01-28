@@ -44,10 +44,10 @@ spec:
             - name: DATA_PATH
               value: /data/db
             - name: PORT
-              value: "27017"
+              value: "<%= app.databasePort != null ? app.databasePort : 27017 %>"
           ports:
             - name: peer
-              containerPort: 27017
+              containerPort: <%= app.databasePort != null ? app.databasePort : 27017 %>
           command:
             - mongod
           args:
@@ -58,6 +58,7 @@ spec:
             exec:
               command:
                 - mongosh
+                - --port=<%= app.databasePort != null ? app.databasePort : 27017 %>
                 - --eval
                 - "db.adminCommand('ping')"
             initialDelaySeconds: 30
@@ -69,6 +70,7 @@ spec:
             exec:
               command:
                 - mongosh
+                - --port=<%= app.databasePort != null ? app.databasePort : 27017 %>
                 - --eval
                 - "db.adminCommand('ping')"
             initialDelaySeconds: 30
@@ -116,6 +118,6 @@ spec:
   publishNotReadyAddresses: true
   ports:
     - name: peer
-      port: 27017
+      port: <%= app.databasePort != null ? app.databasePort : 27017 %>
   selector:
     app: <%= app.baseName.toLowerCase() %>-mongodb
