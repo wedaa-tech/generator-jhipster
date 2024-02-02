@@ -82,8 +82,10 @@ spec:
             secretKeyRef:
               name: <%= app.baseName.toLowerCase() %>-postgresql
               key: postgresql-password
+        - name: PGPORT
+          value: "<%= app.databasePort != null ? app.databasePort : 5432%>"
         ports:
-        - containerPort: 5432
+        - containerPort: <%= app.databasePort != null ? app.databasePort : 5432%>
         volumeMounts:
         - name: data
           mountPath: /var/lib/postgresql/data
@@ -105,4 +107,4 @@ spec:
   selector:
     app: <%= app.baseName.toLowerCase() %>-postgresql
   ports:
-  - port: 5432
+  - port: <%= app.databasePort != null ? app.databasePort : 5432%>

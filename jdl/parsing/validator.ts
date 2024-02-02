@@ -209,6 +209,7 @@ const configPropsValidations: Record<string, JDLValidatorOption> = {
     msg: 'searchEngine property',
   },
   SERVER_PORT: { type: 'INTEGER' },
+  DATABASE_PORT: { type: 'INTEGER' },
   SERVICE_DISCOVERY_TYPE: {
     type: 'NAME',
     pattern: ALPHABETIC_LOWER,

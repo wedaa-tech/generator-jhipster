@@ -38,6 +38,7 @@ export default function prepareSqlApplicationProperties(application: any) {
   const prodDatabaseOptions = {
     databaseName: prodDatabaseData.defaultDatabaseName ?? application.baseName,
     hostname: 'localhost',
+    databasePort: application.databasePort,
   };
 
   application.prodJdbcUrl = getJdbcUrl(application.prodDatabaseType, prodDatabaseOptions);

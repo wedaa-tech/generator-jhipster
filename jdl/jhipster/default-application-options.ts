@@ -57,6 +57,7 @@ const {
   WITH_EXAMPLE, // adding withExample @cmi-tic-harika
   DATABASE_TYPE,
   DEV_DATABASE_TYPE,
+  DATABASE_PORT,
   DTO_SUFFIX,
   ENABLE_HIBERNATE_CACHE,
   ENABLE_SWAGGER_CODEGEN,
@@ -182,6 +183,7 @@ export function getConfigForDatabaseType(options: any = {}): any {
   if (options[DATABASE_TYPE] === SQL) {
     if (options[PROD_DATABASE_TYPE] === undefined) {
       options[PROD_DATABASE_TYPE] = POSTGRESQL;
+      options[DATABASE_PORT] = 5432;
     }
     if (options[DEV_DATABASE_TYPE] === undefined) {
       options[DEV_DATABASE_TYPE] = H2_DISK;

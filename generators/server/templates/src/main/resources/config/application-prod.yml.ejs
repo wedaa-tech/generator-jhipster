@@ -136,7 +136,7 @@ spring:
 <%_ if (databaseTypeMongodb) { _%>
   data:
     mongodb:
-      uri: mongodb://localhost:27017<% if (reactive) { %>/?waitQueueMultiple=1000<% } %>
+      uri: mongodb://localhost:<%= databasePort != null ? databasePort : 27017 %><% if (reactive) { %>/?waitQueueMultiple=1000<% } %>
       database: <%= baseName %>
 <%_ } _%>
 <%_ if (databaseTypeCassandra) { _%>
@@ -215,7 +215,7 @@ server:
 
 jhipster:
   cors:
-    allowed-origins: 'http://localhost:3000,http://localhost:4200<%_ appConfigs.forEach(appConfig => { %><%= appConfig.clientFramework !== 'no' ? `,http://localhost:${appConfig.serverPort}` : '' %><%_ }); %>'
+    allowed-origins: 'http://localhost:3000,http://localhost:4200<%_ appConfigs.forEach(appConfig => { %><%= appConfig.hasOwnProperty('clientFramework') && appConfig.clientFramework !== 'no' ? `,http://localhost:${appConfig.serverPort}` : '' %><%_ }); %>'
     allowed-origin-patterns: 'https://*.githubpreview.dev'
     allowed-methods: '*'
     allowed-headers: '*'
