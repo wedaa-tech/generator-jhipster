@@ -14,6 +14,6 @@ public class RabbitMQConsumer<%= uniqueName %> {
 
     @RabbitListener(queues = RabbitMQConfig<%= uniqueName %>.QUEUE)
     public void listener(RabbitMessageModel message) {
-        logger.info("Received message: {}", message);
+        logger.info("Consumed from Queue: {}, Routing Key: {}, Message: {}", RabbitMQConfig<%= uniqueName %>.QUEUE, RabbitMQConfig<%= uniqueName %>.ROUTING_KEY, message);
     }
 }

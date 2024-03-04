@@ -10,10 +10,32 @@ export default async function writeCommunicationsFilesTask({ application }) {
   // Write client files
   Object.assign(this, application);
 
-  if (this.communicationsFrameworkRabbitMQ || this.communicationsFrameworkRestAPI) {
+  let restapi = false;
+  let rabbitmq = false;
+
+  for (const config of this.commConfigs) {
+    if (config.client === this.jhipsterConfig.baseName && config.type === "sync") {
+      restapi = true;
+    }
+    if (config.server === this.jhipsterConfig.baseName && config.type === "async") {
+      rabbitmq = true;
+    }
+    if (restapi && rabbitmq) {
+      break;
+    }
+  }
+
+  // add COMMUNICATION.md file
+  if (rabbitmq || restapi) {
     this.fs.copyTpl(
       this.templatePath(`COMMUNICATION.md.ejs`),
-      this.destinationPath(`COMMUNICATION.md`)
+      this.destinationPath(`COMMUNICATION.md`), {
+      baseName: this.jhipsterConfig.baseName,
+      serverPort: this.jhipsterConfig.serverPort,
+      commConfigs: this.commConfigs,
+      RestAPI: restapi,
+      RabbitMQ: rabbitmq
+    }
     );
   }
 
@@ -29,8 +51,8 @@ export default async function writeCommunicationsFilesTask({ application }) {
 
   if (this.communicationsFrameworkRestAPI) {
     let communicationServersForBaseApp = [];
-    communications.forEach(comm =>{
-      if(comm.client === this.jhipsterConfig.baseName){
+    communications.forEach(comm => {
+      if (comm.client === this.jhipsterConfig.baseName) {
         communicationServersForBaseApp.push(comm.server);
       }
     })
@@ -41,7 +63,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
         isOauth2EnabledForAlestOneServer = true;
       }
     });
-    if(isOauth2EnabledForAlestOneServer){
+    if (isOauth2EnabledForAlestOneServer) {
       this.fs.copyTpl(
         this.templatePath(`${REST_API_MAIN_DIR}/java/package/config/webClient/AccessToken.java.ejs`),
         this.destinationPath(`${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/webClient/AccessToken.java')),
@@ -67,6 +89,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
   }
 
   for (let i = 0; i < communications.length; i++) {
+    // clinet configuration
     if (this.jhipsterConfig.baseName === communications[i].client) {
       if (communications[i].framework === RABBITMQ) {
         const capitalizeServerName = communications[i].server.charAt(0).toUpperCase() + communications[i].server.slice(1);
@@ -117,6 +140,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
           }
         });
         const capitalizeServerName = communications[i].server.charAt(0).toUpperCase() + communications[i].server.slice(1);
+        // Add client resource to client[WITH EUREKA]
         if (isEurekaEnabledForServer) {
           this.fs.copyTpl(
             this.templatePath(`${REST_API_MAIN_DIR}/java/package/web/rest/ClientResource_eureka.java.ejs`),
@@ -149,6 +173,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
             }
           );
         } else {
+          // Add client resource to client[WITHOUT EUREKA]
           this.fs.copyTpl(
             this.templatePath(`${REST_API_MAIN_DIR}/java/package/web/rest/ClientResource.java.ejs`),
             this.destinationPath(
@@ -183,6 +208,7 @@ export default async function writeCommunicationsFilesTask({ application }) {
       }
     }
 
+    // server configuration
     if (this.jhipsterConfig.baseName === communications[i].server) {
       if (communications[i].framework === RABBITMQ) {
         const capitalizeServerName = communications[i].server.charAt(0).toUpperCase() + communications[i].server.slice(1);
