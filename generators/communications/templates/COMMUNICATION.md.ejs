@@ -1,36 +1,41 @@
 # Communication
 
-
+<% if(RestAPI) { %>
 ## SYNC
 
-Synchronized communication is available through the REST API. You can call other microservices using the following curl command:
+Synchronized communication is configured using REST API.
+<% } %>
 
-```
-curl http://localhost:<serverPort>/rest/services/<serviceBaseName>
-```
-
-For example, if your communication block is as follows:
-
-![alt text](https://i.imgur.com/4KLbJFL.png)
-```
+<% if(RestAPI) { %>```<% } %><% commConfigs.forEach(function(config) { %> <% if(config.client === baseName && config.type === "sync") { %>
 communication {
-  client "backedone"
-  server "backendtwo"
+  client "<%= baseName %>"
+  server "<%= config.server %>"
   type "sync"
   framework "rest-api"
 }
+<% } %><% }); %>
+<% if(RestAPI) { %>```<% } %>
+<% if(RestAPI) { %>
+You can call other microservices using the following curl command:
+<% } %>
 
+<% commConfigs.forEach(function(config) { %> <% if(config.client === baseName && config.type === "sync") { %>
 ```
+curl http://localhost:<%= serverPort %>/rest/services/<%= config.server  %>
+```<% } %> <% }); %>
 
-This configuration means that backendone will act as the client, and backendtwo will act as the server. The client can make a REST call to the provided endpoint:
 
-```
-http://localhost:<serverPort>/rest/services/backendtwo
-```
-Note:-
-
-When a server-side microservice is secured using OAuth2, typically with a tool like Keycloak, the responsibility for obtaining an access token and making REST API calls to that server lies with the client-side microservice. The client-side microservice is pre-configured with the necessary OAuth2 settings and retrieve the access token before making REST API requests to the protected microservice.
-
+<% if(RabbitMQ) { %>
 ## ASYNC
 
-Asynchronous communication is available via RabbitMQ. Both the consumer and producer are pre-configured. As soon as you start the application, the asynchronous communication is ready to use.
+Asynchronous communication pre-configured using RabbitMQ.
+<% } %>
+
+<% if(RabbitMQ) { %>```<% } %><% commConfigs.forEach(function(config) { %> <% if(config.server === baseName&& config.type === "async") { %>
+communication {
+  producer "<%= baseName %>"
+  consumer "<%= config.client %>"
+  type "async"
+  framework "rabbitmq"
+}
+<% if(RabbitMQ) { %>```<% } %><% } %><% }); %>
