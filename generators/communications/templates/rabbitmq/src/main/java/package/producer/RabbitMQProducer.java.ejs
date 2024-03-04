@@ -23,9 +23,9 @@ public class RabbitMQProducer<%= uniqueName %> {
     @Scheduled(cron = "0/15 * * * * *")
     public void publishMessage() {
         RabbitMessageModel message = new RabbitMessageModel();
-        message.setMessage("Publishing this message from <%= baseName %> with key: " + RabbitMQConfig<%= uniqueName %>.QUEUE);
+        message.setMessage("Message from <%= baseName %>");
         message.setDateTime(new Date());
         template.convertAndSend(RabbitMQConfig<%= uniqueName %>.EXCHANGE, RabbitMQConfig<%= uniqueName %>.ROUTING_KEY, message);
-        logger.info("Publishing to the Queue: <%= uniqueName %>");
+        logger.info("Published a message with ID: {}, Routing Key: {}", message.getId(), RabbitMQConfig<%= uniqueName %>.ROUTING_KEY);
     }
 }
