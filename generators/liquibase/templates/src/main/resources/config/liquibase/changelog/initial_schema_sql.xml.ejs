@@ -185,57 +185,78 @@ _%>
 
     <%_ if (prodDatabaseTypePostgres) { _%>
     
-    <changeSet author="jhipster" id="00000000000003" >
-    <createTable tableName="note">
-        <column name="id" type="BIGINT" autoIncrement="true" startWith="9">
-            <constraints primaryKey="true" primaryKeyName="notePK"/>
-        </column>
-        <column name="subject" type="VARCHAR"/>
-        <column name="description" type="VARCHAR"/>
-    </createTable>
+    <changeSet author="wedaa" id="00000000000003">
+        <createTable tableName="notes">
+            <column name="id" type="BIGINT" autoIncrement="true" startWith="9">
+                <constraints primaryKey="true" primaryKeyName="notesPK" />
+            </column>
+            <column name="subject" type="VARCHAR" />
+            <column name="description" type="VARCHAR" />
+            <column name="created_by" type="VARCHAR" />
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_by" type="VARCHAR" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+        </createTable>
     </changeSet>
 
-    <!-- Insert changeSet for inserting dummy records into the 'note' table -->
-    <changeSet author="jhipster" id="00000000000004">
-        <insert tableName="note">
-            <column name="id" value="1"/>
-            <column name="subject" value="Meeting with Client"/>
-            <column name="description" value="Discuss project requirements and timelines with the client."/>
+    <!-- Insert changeSet for adding sample records to 'notes' table -->
+    <changeSet author="wedaa" id="00000000000004">
+        <insert tableName="notes">
+            <column name="id" value="1" />
+            <column name="subject" value="Meeting with Client" />
+            <column name="description" value="Discuss project requirements and timelines with the client." />
+            <column name="created_by" value="wedaa" />
+            <column name="created_date" value="now()" />
         </insert>
-        <insert tableName="note">
-            <column name="id" value="2"/>
-            <column name="subject" value="Research and Development"/>
-            <column name="description" value="Conduct research on the latest technologies for project development."/>
+        <insert tableName="notes">
+            <column name="id" value="2" />
+            <column name="subject" value="Research and Development" />
+            <column name="description" value="Conduct research on the latest technologies for project development." />
+            <column name="created_by" value="wedaa" />
+            <column name="created_date" value="now()" />
         </insert>
-        <insert tableName="note">
-            <column name="id" value="3"/>
-            <column name="subject" value="Team Collaboration"/>
-            <column name="description" value="Collaborate with team members to enhance project collaboration and communication."/>
+        <insert tableName="notes">
+            <column name="id" value="3" />
+            <column name="subject" value="Team Collaboration" />
+            <column name="description"
+                value="Collaborate with team members to enhance project collaboration and communication." />
+            <column name="created_by" value="wedaa" />
+            <column name="created_date" value="now()" />
         </insert>
-        <insert tableName="note">
-            <column name="id" value="4"/>
-            <column name="subject" value="Task Prioritization"/>
-            <column name="description" value="Prioritize tasks for the upcoming sprint based on project goals."/>
+        <insert tableName="notes">
+            <column name="id" value="4" />
+            <column name="subject" value="Task Prioritization" />
+            <column name="description" value="Prioritize tasks for the upcoming sprint based on project goals." />
+            <column name="created_by" value="wedaa" />
+            <column name="created_date" value="now()" />
         </insert>
-        <insert tableName="note">
-            <column name="id" value="5"/>
-            <column name="subject" value="Bug Fixing Session"/>
-            <column name="description" value="Identify and fix bugs reported during the testing phase."/>
+        <insert tableName="notes">
+            <column name="id" value="5" />
+            <column name="subject" value="Bug Fixing Session" />
+            <column name="description" value="Identify and fix bugs reported during the testing phase." />
+            <column name="created_by" value="wedaa" />
+            <column name="created_date" value="now()" />
         </insert>
-        <insert tableName="note">
-            <column name="id" value="6"/>
-            <column name="subject" value="Training Workshop"/>
-            <column name="description" value="Conduct a workshop to train team members on new tools and technologies."/>
+        <insert tableName="notes">
+            <column name="id" value="6" />
+            <column name="subject" value="Training Workshop" />
+            <column name="description" value="Conduct a workshop to train team members on new tools and technologies." />
+            <column name="created_by" value="wedaa" />
+            <column name="created_date" value="now()" />
         </insert>
-        <insert tableName="note">
-            <column name="id" value="7"/>
-            <column name="subject" value="Monthly Review Meeting"/>
-            <column name="description" value="Review project progress and discuss any challenges faced during the month."/>
+        <insert tableName="notes">
+            <column name="id" value="7" />
+            <column name="subject" value="Monthly Review Meeting" />
+            <column name="description" value="Review project progress and discuss any challenges faced during the month." />
+            <column name="created_by" value="wedaa" />
+            <column name="created_date" value="now()" />
         </insert>
-        <insert tableName="note">
-            <column name="id" value="8"/>
-            <column name="subject" value="Documentation Update"/>
-            <column name="description" value="Update project documentation to reflect recent changes and improvements."/>
+        <insert tableName="notes">
+            <column name="id" value="8" />
+            <column name="subject" value="Documentation Update" />
+            <column name="description" value="Update project documentation to reflect recent changes and improvements." />
+            <column name="created_by" value="wedaa" />
+            <column name="created_date" value="now()" />
         </insert>
     </changeSet>
     <%_ } _%>

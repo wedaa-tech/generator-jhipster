@@ -101,7 +101,8 @@ export default class JavaGenerator extends BaseApplicationGenerator<GeneratorDef
   }
 
   get [BaseApplicationGenerator.DEFAULT]() {
-    return this.delegateTasksToBlueprint(() => this.default);
+    // return this.delegateTasksToBlueprint(() => this.default);
+    return this.delegateTasksToBlueprint(() => {});
   }
 
   get writing() {
@@ -112,7 +113,8 @@ export default class JavaGenerator extends BaseApplicationGenerator<GeneratorDef
   }
 
   get [BaseApplicationGenerator.WRITING]() {
-    return this.delegateTasksToBlueprint(() => this.writing);
+    // return this.delegateTasksToBlueprint(() => this.writing);
+    return this.delegateTasksToBlueprint(() => {});
   }
 
   /**

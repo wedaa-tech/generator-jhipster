@@ -1,7 +1,7 @@
-package <%= packageName %>.web.rest;
+package <%= packageName %>.controller;
 
 import <%= packageName %>.domain.Note;
-import <%= packageName %>.service.NotesService;
+import <%= packageName %>.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,30 +10,30 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/notes")
-public class NotesController {
+public class NoteController {
 
     @Autowired
-    private NotesService notesService;
+    private NoteService noteService;
 
 
     @PostMapping
     public ResponseEntity<Note> addNote(@RequestBody Note note){
-        return ResponseEntity.ok(notesService.addnote(note));
+        return ResponseEntity.ok(noteService.addnote(note));
     }
 
     @GetMapping
     public ResponseEntity<List<Note>> getNotes(){
-        return ResponseEntity.ok(notesService.getNotes());
+        return ResponseEntity.ok(noteService.getNotes());
     }
 
     @PatchMapping
     public ResponseEntity<Note> updateNote(@RequestParam Long id, @RequestBody Note note){
-        return ResponseEntity.ok(notesService.updateNote(id, note));
+        return ResponseEntity.ok(noteService.updateNote(id, note));
     }
 
     @DeleteMapping
     public void deleteNote(@RequestParam Long id){
-        notesService.deleteNote(id);
+        noteService.deleteNote(id);
     }
 
 
