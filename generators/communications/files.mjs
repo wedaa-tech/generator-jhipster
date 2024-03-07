@@ -65,8 +65,8 @@ export default async function writeCommunicationsFilesTask({ application }) {
     });
     if (isOauth2EnabledForAlestOneServer) {
       this.fs.copyTpl(
-        this.templatePath(`${REST_API_MAIN_DIR}/java/package/config/webClient/AccessToken.java.ejs`),
-        this.destinationPath(`${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/webClient/AccessToken.java')),
+        this.templatePath(`${REST_API_MAIN_DIR}/java/package/config/AccessToken.java.ejs`),
+        this.destinationPath(`${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/AccessToken.java')),
         {
           packageName: this.jhipsterConfig.packageName,
           authenticationTypeOauth2: this.jhipsterConfig.authenticationType == 'oauth2',
@@ -76,9 +76,9 @@ export default async function writeCommunicationsFilesTask({ application }) {
     }
 
     this.fs.copyTpl(
-      this.templatePath(`${REST_API_MAIN_DIR}/java/package/config/webClient/WebClientConfig.java.ejs`),
+      this.templatePath(`${REST_API_MAIN_DIR}/java/package/config/WebClientConfig.java.ejs`),
       this.destinationPath(
-        `${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/webClient/WebClientConfig.java')
+        `${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/WebClientConfig.java')
       ),
       {
         packageName: this.jhipsterConfig.packageName,

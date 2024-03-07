@@ -53,6 +53,6 @@ export default function cleanupRestAPIFilesTask({ application }) {
     }
   }
 
-  this.removeFile(`${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/webClient/AccessToken.java'));
-  this.removeFile(`${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/webClient/WebClientConfig.java'));
+  this.removeFile(`${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/AccessToken.java'));
+  this.removeFile(`${SERVER_MAIN_SRC_DIR}`.concat(this.jhipsterConfig.packageFolder).concat('/config/WebClientConfig.java'));
 }

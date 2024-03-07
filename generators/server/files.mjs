@@ -17,17 +17,17 @@
  * limitations under the License.
  */
 import cleanupOldServerFiles from './cleanup.mjs';
-import { SERVER_MAIN_SRC_DIR, SERVER_MAIN_RES_DIR, SERVER_TEST_SRC_DIR, SERVER_TEST_RES_DIR } from '../generator-constants.mjs';
+import { SERVER_MAIN_SRC_DIR, SERVER_MAIN_RES_DIR, SERVER_TEST_SRC_DIR, SERVER_TEST_RES_DIR, WEDAA_DIR } from '../generator-constants.mjs';
 import { addSectionsCondition, mergeSections } from '../base/support/index.mjs';
 import { moveToJavaPackageSrcDir, moveToJavaPackageTestDir, moveToSrcMainResourcesDir } from './support/index.mjs';
 
 const imperativeConfigFiles = {
   imperativeFiles: [
-    {
+    /* {
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['ApplicationWebXml.java'],
-    },
+    }, */
     {
       path: `${SERVER_TEST_SRC_DIR}package/`,
       renameTo: moveToJavaPackageTestDir,
@@ -57,28 +57,28 @@ const reactiveConfigFiles = {
 
 const feignFiles = {
   microserviceFeignFiles: [
-    {
+    /* {
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['config/FeignConfiguration.java'],
-    },
+    }, */
     {
       condition: generator => generator.authenticationTypeOauth2,
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: [
         'security/oauth2/AuthorizationHeaderUtil.java',
-        'client/AuthorizedFeignClient.java',
-        'client/OAuth2InterceptedFeignConfiguration.java',
+        // 'client/AuthorizedFeignClient.java',
+        // 'client/OAuth2InterceptedFeignConfiguration.java',
         'client/TokenRelayRequestInterceptor.java',
       ],
     },
-    {
+    /* {
       condition: generator => generator.authenticationTypeJwt,
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['client/UserFeignClientInterceptor_jwt.java'],
-    },
+    }, */
     {
       condition: generator => generator.authenticationTypeOauth2,
       path: `${SERVER_TEST_SRC_DIR}package/`,
@@ -352,31 +352,37 @@ const NotesApplicationFiles = {
   swagger: [
     {
       condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
-      templates: ['service/NotesService.java'],
-    },
-    {
-      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
-      templates: ['repository/NotesRepository.java'],
-    },
-    {
-      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
-      templates: ['web/rest/NotesController.java'],
-    },
-    {
-      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
+      path: `${WEDAA_DIR}${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['domain/Note.java'],
     },
     {
+      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
+      path: `${WEDAA_DIR}${SERVER_MAIN_SRC_DIR}package/`,
+      renameTo: moveToJavaPackageSrcDir,
+      templates: ['repository/NoteRepository.java'],
+    },
+    {
+      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
+      path: `${WEDAA_DIR}${SERVER_MAIN_SRC_DIR}package/`,
+      renameTo: moveToJavaPackageSrcDir,
+      templates: ['service/NoteService.java'],
+    },
+    {
+      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
+      path: `${WEDAA_DIR}${SERVER_MAIN_SRC_DIR}package/`,
+      renameTo: moveToJavaPackageSrcDir,
+      templates: ['service/impl/NoteServiceImpl.java'],
+    },
+    {
+      condition: generator => generator.prodDatabaseTypePostgres || generator.databaseTypeMongodb,
+      path: `${WEDAA_DIR}${SERVER_MAIN_SRC_DIR}package/`,
+      renameTo: moveToJavaPackageSrcDir,
+      templates: ['controller/NoteController.java'],
+    },
+    {
       condition: generator => generator.databaseTypeMongodb,
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
+      path: `${WEDAA_DIR}${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: ['service/SequenceGeneratorService.java', 'domain/Sequence.java'],
     },
@@ -523,8 +529,13 @@ export const baseServerFiles = {
     },
   ],
   serverJavaApp: [
+    /* {
+       path: `${SERVER_MAIN_SRC_DIR}package`,
+       renameTo: (data, filename) => moveToJavaPackageSrcDir(data, filename.replace('Application.java', `${data.mainClass}.java`)),
+       templates: ['Application.java'],
+    }, */
     {
-      path: `${SERVER_MAIN_SRC_DIR}package`,
+      path: `${WEDAA_DIR}${SERVER_MAIN_SRC_DIR}package`,
       renameTo: (data, filename) => moveToJavaPackageSrcDir(data, filename.replace('Application.java', `${data.mainClass}.java`)),
       templates: ['Application.java'],
     },
@@ -532,7 +543,7 @@ export const baseServerFiles = {
       path: `${SERVER_TEST_SRC_DIR}package/`,
       renameTo: moveToJavaPackageTestDir,
       templates: [
-        'TechnicalStructureTest.java',
+        // 'TechnicalStructureTest.java',
         'config/AsyncSyncConfiguration.java',
         'IntegrationTest.java',
         'config/SpringBootTestClassOrderer.java',
@@ -540,7 +551,7 @@ export const baseServerFiles = {
     },
   ],
   serverJavaConfig: [
-    {
+    /* {
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: [
@@ -552,6 +563,14 @@ export const baseServerFiles = {
         'config/ApplicationProperties.java',
         'config/JacksonConfiguration.java',
         'config/LoggingAspectConfiguration.java',
+        'config/WebConfigurer.java',
+      ],
+    }, */
+    {
+      path: `${SERVER_MAIN_SRC_DIR}package/`,
+      renameTo: moveToJavaPackageSrcDir,
+      templates: [
+        'config/AsyncConfiguration.java',
         'config/WebConfigurer.java',
       ],
     },
@@ -566,11 +585,11 @@ export const baseServerFiles = {
       renameTo: moveToJavaPackageSrcDir,
       templates: ['config/Constants.java'],
     },
-    {
+    /* {
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
       templates: [data => `config/LocaleConfiguration_${data.imperativeOrReactive}.java`],
-    },
+    }, */
   ],
   serverJavaDomain: [
     {

@@ -1,7 +1,8 @@
-package <%= packageName %>.service;
+package <%= packageName %>.service.impl;
 
 import <%= packageName %>.domain.Note;
-import <%= packageName %>.repository.NotesRepository;
+import <%= packageName %>.repository.NoteRepository;
+import <%= packageName %>.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +11,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class NotesService {
+public class NoteServiceImpl implements NoteService {
     <%_ if (databaseTypeMongodb) { _%>
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
     <%_ } _%> 
     
     @Autowired
-    private NotesRepository notesRepository;
+    private NoteRepository noteRepository;
 
     public Note addnote(Note note){
         <%_ if (databaseTypeMongodb) { _%>
@@ -26,15 +27,15 @@ public class NotesService {
         }
         <%_ } _%> 
 
-        return notesRepository.save(note);
+        return noteRepository.save(note);
     }
 
     public List<Note> getNotes() {
-        return notesRepository.findAll();
+        return noteRepository.findAll();
     }
 
     public Note updateNote(Long  id, Note note) {
-        Optional<Note> optionalNote  = notesRepository.findById(id);
+        Optional<Note> optionalNote  = noteRepository.findById(id);
         if(optionalNote.isPresent()) {
             Note oldNote = optionalNote.get();
             if(Objects.nonNull(note.getSubject()) ){
@@ -43,12 +44,12 @@ public class NotesService {
             if(Objects.nonNull(note.getDescription()) ){
                 oldNote.setDescription(note.getDescription());
             }
-            return notesRepository.save(oldNote);
+            return noteRepository.save(oldNote);
         } 
         return null;
     }
 
     public void deleteNote(Long id) {
-        notesRepository.deleteById(id);
+        noteRepository.deleteById(id);
     }
 }
