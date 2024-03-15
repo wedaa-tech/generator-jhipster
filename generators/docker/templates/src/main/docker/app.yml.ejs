@@ -37,11 +37,11 @@ services:
 const databaseName = prodDatabaseTypeMysql || prodDatabaseTypeMariadb ? baseName.toLowerCase() : baseName;
 _%>
   <%_ if (reactive) { _%>
-      - SPRING_R2DBC_URL=<%- this.getR2DBCUrl(prodDatabaseType, { hostname: `${baseName.toLowerCase()}-${prodDatabaseType}`, databaseName: databaseName, databasePort: databasePort }) %>
+      - SPRING_R2DBC_URL=<%- this.getR2DBCUrl(prodDatabaseType, { hostname: `${baseName.toLowerCase()}-${prodDatabaseType}`, databaseName: databaseName, databasePort: 5432 }) %>
   <%_ } else { _%>
-      - SPRING_DATASOURCE_URL=<%- this.getJDBCUrl(prodDatabaseType, { hostname: `${baseName.toLowerCase()}-${prodDatabaseType}`, databaseName: databaseName, databasePort: databasePort }) %>
+      - SPRING_DATASOURCE_URL=<%- this.getJDBCUrl(prodDatabaseType, { hostname: `${baseName.toLowerCase()}-${prodDatabaseType}`, databaseName: databaseName, databasePort: 5432 }) %>
   <%_ } _%>
-      - SPRING_LIQUIBASE_URL=<%- this.getJDBCUrl(prodDatabaseType, { hostname: `${baseName.toLowerCase()}-${prodDatabaseType}`, databaseName: databaseName , databasePort: databasePort }) %>
+      - SPRING_LIQUIBASE_URL=<%- this.getJDBCUrl(prodDatabaseType, { hostname: `${baseName.toLowerCase()}-${prodDatabaseType}`, databaseName: databaseName , databasePort: 5432 }) %>
 <%_ } _%>
 <%_ if (databaseTypeMongodb) { _%>
       - SPRING_DATA_MONGODB_URI=mongodb://<%= baseName.toLowerCase() %>-mongodb:<%= databasePort != null ? databasePort : 27017 %><% if (reactive) { %>/?waitQueueMultiple=1000<% } %>
