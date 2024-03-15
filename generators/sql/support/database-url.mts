@@ -54,9 +54,9 @@ export default function getDatabaseUrl(databaseType: string, protocol: string, o
   let url = `${protocol}:${protocolSuffix}`;
   let dbPort = ':' + options.databasePort + '/';
   if (hostname || localDirectory) {
-    url = `${url}${localDirectory || hostname + port}${databaseName}`;
+    url = `${url}${localDirectory || hostname + dbPort}${databaseName}`;
   } else {
-    url = `${url}${databaseName}${port}`;
+    url = `${url}${databaseName}${options.databasePort}}`;
   }
   return `${url}${skipExtraOptions ? '' : extraOptions}`;
 }
