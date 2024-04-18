@@ -1,0 +1,40 @@
+package <%= packageName %>.service;
+
+import <%= packageName %>.domain.Sequence;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Service;
+
+@Service
+public class SequenceGeneratorService {
+
+    private final MongoOperations mongoOperations;
+
+    @Autowired
+    public SequenceGeneratorService(MongoOperations mongoOperations) {
+        this.mongoOperations = mongoOperations;
+    }
+
+    public Long generateSequence(String seqName) {
+        Query query = new Query(Criteria.where("_id").is(seqName));
+        Update update = new Update().inc("seq", 1);
+
+        FindAndModifyOptions options = new FindAndModifyOptions();
+        options.returnNew(true);
+
+        Sequence sequence = mongoOperations.findAndModify(query, update, options, Sequence.class);
+
+        if (sequence == null) {
+            sequence = new Sequence();
+            sequence.setId(seqName);
+            sequence.setSeq(9L);
+            mongoOperations.save(sequence);
+        }
+
+        return sequence.getSeq();
+    }
+}
