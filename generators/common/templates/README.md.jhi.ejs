@@ -5,6 +5,12 @@ This is a <%= applicationTypeGateway ? "gateway" : "microservice" %> prototype g
 ## Prerequisites
 
 - jdk version >= 17
+<%_ if (authenticationTypeOauth2 && serviceDiscoveryEureka) { _%>
+- For Keycloak to work with Service Discovery in local(docker) environment, following line must be added to your hosts file `/etc/hosts`
+  ```
+  127.0.0.1	keycloak
+  ```
+<%_ } _%>
 
 ## Project Structure
 
@@ -40,7 +46,11 @@ Docker compose files are provided for the same to get started quickly.
 
 Component details:
 <%_ if (authenticationTypeOauth2) { _%>
-- Keycloak as Identity Management: `npm run docker:keycloak:up`
+- To make Keycloak work, you need to add the following line to your hosts file `/etc/hosts`
+  ```
+  127.0.0.1	keycloak
+  ```
+  Keycloak as Identity Management: `npm run docker:keycloak:up`
 <%_ } _%>
 <%_ if (serviceDiscoveryEureka) { _%>
 - Eureka Service Discovery: `npm run docker:jhispter-registry:up`
