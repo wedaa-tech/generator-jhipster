@@ -46,11 +46,7 @@ Docker compose files are provided for the same to get started quickly.
 
 Component details:
 <%_ if (authenticationTypeOauth2) { _%>
-- To make Keycloak work, you need to add the following line to your hosts file `/etc/hosts`
-  ```
-  127.0.0.1	keycloak
-  ```
-  Keycloak as Identity Management: `npm run docker:keycloak:up`
+- Keycloak as Identity Management: `npm run docker:keycloak:up`
 <%_ } _%>
 <%_ if (serviceDiscoveryEureka) { _%>
 - Eureka Service Discovery: `npm run docker:jhispter-registry:up`
