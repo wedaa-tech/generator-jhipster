@@ -76,8 +76,8 @@
     <property name="datetimeType" value="date" dbms="neo4j"/>
 <%_ } _%>
 
-    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <!-- adding the file when withExample is true -->
+    <!-- <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/> -->
+    <includeAll path="config/liquibase/changelog/"/>
     <%_ if(withExample) { _%>
       <include file="config/liquibase/changelog/20230228095256_added_entity_Reminder.xml" relativeToChangelogFile="false"/>
     <%_ } _%>
