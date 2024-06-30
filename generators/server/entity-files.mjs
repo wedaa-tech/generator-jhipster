@@ -27,7 +27,7 @@ import {
   moveToJavaPackageTestDir,
   replaceEntityFilePathVariables,
 } from './support/index.mjs';
-import { SERVER_MAIN_SRC_DIR, SERVER_TEST_SRC_DIR } from '../generator-constants.mjs';
+import { SERVER_MAIN_SRC_DIR, SERVER_TEST_SRC_DIR, WEDAA_DIR } from '../generator-constants.mjs';
 import { databaseTypes, entityOptions } from '../../jdl/jhipster/index.mjs';
 import { getEnumInfo } from '../base-application/support/index.mjs';
 
@@ -73,16 +73,16 @@ export const restFiles = {
       condition: generator => !generator.embedded,
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaEntityPackageSrcDir,
-      templates: ['web/rest/_EntityClass_Resource.java'],
+      templates: ['controller/_EntityClass_Controller.java'],
     },
   ],
   restTestFiles: [
     {
       condition: generator => !generator.embedded,
-      path: SERVER_TEST_SRC_DIR,
+      path: `${SERVER_TEST_SRC_DIR}`,
       templates: [
         {
-          file: 'package/web/rest/_EntityClass_ResourceIT.java',
+          file: 'package/controller/_EntityClass_ControllerIT.java',
           options: {
             context: {
               _,
@@ -91,7 +91,7 @@ export const restFiles = {
               SERVER_TEST_SRC_DIR,
             },
           },
-          renameTo: generator => `${generator.entityAbsoluteFolder}/web/rest/${generator.entityClass}ResourceIT.java`,
+          renameTo: generator => `${generator.entityAbsoluteFolder}/controller/${generator.entityClass}ControllerIT.java`,
         },
       ],
     },
@@ -262,7 +262,7 @@ export function writeFiles() {
         } else if (!entity.builtIn) {
           await this.writeFiles({
             sections: serverFiles,
-            rootTemplatesPath: application.reactive ? ['entity/reactive', 'entity'] : 'entity',
+            rootTemplatesPath: application.reactive ? [`${WEDAA_DIR}entity/reactive`, `${WEDAA_DIR}entity`] : `${WEDAA_DIR}entity`,
             context: { ...application, ...entity },
           });
         }
@@ -286,7 +286,7 @@ export function writeFiles() {
                 destinationFile: `${SERVER_MAIN_SRC_DIR}${entity.entityAbsoluteFolder}/domain/enumeration/${fieldType}.java`,
               },
             ],
-            rootTemplatesPath: application.reactive ? ['entity/reactive', 'entity'] : 'entity',
+            rootTemplatesPath: application.reactive ? [`${WEDAA_DIR}entity/reactive`, `${WEDAA_DIR}entity`] : `${WEDAA_DIR}entity`,
             context: enumInfo,
           });
         }
