@@ -44,9 +44,9 @@ export function checkDocker() {
             '         Read http://docs.docker.com/engine/installation/#installation\n'
         )
       );
-      this.abort = true;
+      // this.abort = true;
     } else {
-      // update docker version manually @cmi-tic-craxkumar
+      // update docker version manually if necessary
       const dockerVersion = stdout.split(' ')[2].replace(/,/g, '');
       const dockerVersionMajor = dockerVersion.split('.')[0];
       const dockerVersionMinor = dockerVersion.split('.')[1];
@@ -58,7 +58,7 @@ export function checkDocker() {
                                  Read http://docs.docker.com/engine/installation/#installation`
           )
         );
-        this.abort = true;
+        // this.abort = true;
       } else {
         this.logger.info('Docker is installed');
       }
