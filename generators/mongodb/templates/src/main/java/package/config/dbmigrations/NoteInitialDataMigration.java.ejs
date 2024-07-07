@@ -3,10 +3,8 @@ package <%= packageName %>.config.dbmigrations;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.data.mongodb.core.MongoTemplate;
-
 import <%= packageName %>.domain.Note;
-import <%= packageName %>.repository.NotesRepository;
+import <%= packageName %>.repository.NoteRepository;
 
 import io.mongock.api.annotations.ChangeUnit;
 import io.mongock.api.annotations.Execution;
@@ -14,18 +12,18 @@ import io.mongock.api.annotations.RollbackExecution;
 
 
 @ChangeUnit(id="notes-initialization", order = "001")
-public class NotesInitialDataMigration {
+public class NoteInitialDataMigration {
 
-    private final NotesRepository notesRepository;
+    private final NoteRepository noteRepository;
 
-    public NotesInitialDataMigration(NotesRepository notesRepository) {
-        this.notesRepository = notesRepository;
+    public NoteInitialDataMigration(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
     }
 
     @Execution
     public void changeSet() {
         List<Note> notes = createNotes();
-        notesRepository.saveAll(notes);
+        noteRepository.saveAll(notes);
     }
 
     @RollbackExecution

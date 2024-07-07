@@ -3,6 +3,10 @@ package <%= packageName %>.service.impl;
 import <%= packageName %>.domain.Note;
 import <%= packageName %>.repository.NoteRepository;
 import <%= packageName %>.service.NoteService;
+<%_ if (databaseTypeMongodb) { _%>
+import <%= packageName %>.service.SequenceGeneratorService;
+<%_ } _%> 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
