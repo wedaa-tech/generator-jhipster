@@ -35,7 +35,7 @@ export const mongoDbFiles = {
     {
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
-      templates: ['config/dbmigrations/NotesInitialDataMigration.java'],
+      templates: ['config/dbmigrations/NoteInitialDataMigration.java'],
     },
     {
       path: `${SERVER_TEST_SRC_DIR}package/`,
